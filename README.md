@@ -20,10 +20,10 @@ vip := &fortigate.VIP{
 		Extip:           "10.90.250.1",
 		Extport:         "80",
 		Realservers: []fortigate.VIPRealservers{
-			{Ip: "10.90.250.1", Port: 80},
-			{Ip: "10.90.250.2", Port: 80},
-			{Ip: "10.90.250.3", Port: 80},
-			{Ip: "10.90.250.4", Port: 80},
+			{Ip: "10.90.251.1", Port: 80},
+			{Ip: "10.90.251.2", Port: 80},
+			{Ip: "10.90.251.3", Port: 80},
+			{Ip: "10.90.251.4", Port: 80},
 		},
 	}
 	
