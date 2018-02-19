@@ -397,23 +397,23 @@ type VIP struct {
 
 // The results of a Get or List operation
 type VIPResults struct {
-	Results []VIP `json:"results"`
+	Results []*VIP `json:"results"`
 	Result
 }
 
 // List all VIPs
-func (c *WebClient) ListVIPs() (res []VIP, err error) {
+func (c *WebClient) ListVIPs() (res []*VIP, err error) {
 	var errmsg Result
 	var results VIPResults
 	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip", nil, &results, nil)
 	if err != nil {
-		return []VIP{}, fmt.Errorf("error listing VIPs: %s", err.Error())
+		return []*VIP{}, fmt.Errorf("error listing VIPs: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []VIP{}, fmt.Errorf("error listing VIP: not found")
+			return []*VIP{}, fmt.Errorf("error listing VIP: not found")
 		} else {
-			return []VIP{}, fmt.Errorf("error listing VIP: %s", errmsg.Status)
+			return []*VIP{}, fmt.Errorf("error listing VIP: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -421,22 +421,22 @@ func (c *WebClient) ListVIPs() (res []VIP, err error) {
 }
 
 // Get a VIP by name
-func (c *WebClient) GetVIP(name string) (res VIP, err error) {
+func (c *WebClient) GetVIP(name string) (res *VIP, err error) {
 	var errmsg Result
 	var results VIPResults
 	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip/"+name, nil, &results, &errmsg)
 	if err != nil {
-		return VIP{}, fmt.Errorf("error getting VIP '%s': %s", name, err.Error())
+		return &VIP{}, fmt.Errorf("error getting VIP '%s': %s", name, err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return VIP{}, fmt.Errorf("error getting VIP '%s': not found", name)
+			return &VIP{}, fmt.Errorf("error getting VIP '%s': not found", name)
 		} else {
-			return VIP{}, fmt.Errorf("error getting VIP '%s': %s", name, errmsg.Status)
+			return &VIP{}, fmt.Errorf("error getting VIP '%s': %s", name, errmsg.Status)
 		}
 	}
 	if len(results.Results) == 0 {
-		return VIP{}, fmt.Errorf("error getting VIP '%s': not found", name)
+		return &VIP{}, fmt.Errorf("error getting VIP '%s': not found", name)
 	}
 
 	res = results.Results[0]
@@ -499,4 +499,39 @@ func (c *WebClient) DeleteVIP(name string) (err error) {
 	}
 
 	return
+}
+
+// List all VIPs
+func (c *FakeClient) ListVIPs() (res []*VIP, err error) {
+	for _, r := range c.VIPs {
+		res = append(res, r)
+	}
+	return
+}
+
+// Get a VIP by name
+func (c *FakeClient) GetVIP(name string) (*VIP, error) {
+	if res, ok := c.VIPs[name]; ok {
+		return res, nil
+	} else {
+		return &VIP{}, fmt.Errorf("error getting VIP '%s': not found", name)
+	}
+}
+
+// Create a new VIP
+func (c *FakeClient) CreateVIP(obj *VIP) (err error) {
+	c.VIPs[obj.Name] = obj
+	return nil
+}
+
+// Update a VIP
+func (c *FakeClient) UpdateVIP(obj *VIP) (err error) {
+	c.VIPs[obj.Name] = obj
+	return nil
+}
+
+// Delete a VIP by name
+func (c *FakeClient) DeleteVIP(name string) (err error) {
+	delete(c.VIPs, name)
+	return nil
 }

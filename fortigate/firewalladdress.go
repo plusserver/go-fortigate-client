@@ -164,23 +164,23 @@ type FirewallAddress struct {
 
 // The results of a Get or List operation
 type FirewallAddressResults struct {
-	Results []FirewallAddress `json:"results"`
+	Results []*FirewallAddress `json:"results"`
 	Result
 }
 
 // List all FirewallAddresss
-func (c *WebClient) ListFirewallAddresss() (res []FirewallAddress, err error) {
+func (c *WebClient) ListFirewallAddresss() (res []*FirewallAddress, err error) {
 	var errmsg Result
 	var results FirewallAddressResults
 	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/address", nil, &results, nil)
 	if err != nil {
-		return []FirewallAddress{}, fmt.Errorf("error listing FirewallAddresss: %s", err.Error())
+		return []*FirewallAddress{}, fmt.Errorf("error listing FirewallAddresss: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []FirewallAddress{}, fmt.Errorf("error listing FirewallAddress: not found")
+			return []*FirewallAddress{}, fmt.Errorf("error listing FirewallAddress: not found")
 		} else {
-			return []FirewallAddress{}, fmt.Errorf("error listing FirewallAddress: %s", errmsg.Status)
+			return []*FirewallAddress{}, fmt.Errorf("error listing FirewallAddress: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -188,22 +188,22 @@ func (c *WebClient) ListFirewallAddresss() (res []FirewallAddress, err error) {
 }
 
 // Get a FirewallAddress by name
-func (c *WebClient) GetFirewallAddress(name string) (res FirewallAddress, err error) {
+func (c *WebClient) GetFirewallAddress(name string) (res *FirewallAddress, err error) {
 	var errmsg Result
 	var results FirewallAddressResults
 	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/address/"+name, nil, &results, &errmsg)
 	if err != nil {
-		return FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': %s", name, err.Error())
+		return &FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': %s", name, err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': not found", name)
+			return &FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': not found", name)
 		} else {
-			return FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': %s", name, errmsg.Status)
+			return &FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': %s", name, errmsg.Status)
 		}
 	}
 	if len(results.Results) == 0 {
-		return FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': not found", name)
+		return &FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': not found", name)
 	}
 
 	res = results.Results[0]
@@ -266,4 +266,39 @@ func (c *WebClient) DeleteFirewallAddress(name string) (err error) {
 	}
 
 	return
+}
+
+// List all FirewallAddresss
+func (c *FakeClient) ListFirewallAddresss() (res []*FirewallAddress, err error) {
+	for _, r := range c.FirewallAddresss {
+		res = append(res, r)
+	}
+	return
+}
+
+// Get a FirewallAddress by name
+func (c *FakeClient) GetFirewallAddress(name string) (*FirewallAddress, error) {
+	if res, ok := c.FirewallAddresss[name]; ok {
+		return res, nil
+	} else {
+		return &FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': not found", name)
+	}
+}
+
+// Create a new FirewallAddress
+func (c *FakeClient) CreateFirewallAddress(obj *FirewallAddress) (err error) {
+	c.FirewallAddresss[obj.Name] = obj
+	return nil
+}
+
+// Update a FirewallAddress
+func (c *FakeClient) UpdateFirewallAddress(obj *FirewallAddress) (err error) {
+	c.FirewallAddresss[obj.Name] = obj
+	return nil
+}
+
+// Delete a FirewallAddress by name
+func (c *FakeClient) DeleteFirewallAddress(name string) (err error) {
+	delete(c.FirewallAddresss, name)
+	return nil
 }

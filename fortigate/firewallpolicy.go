@@ -898,23 +898,23 @@ type FirewallPolicy struct {
 
 // The results of a Get or List operation
 type FirewallPolicyResults struct {
-	Results []FirewallPolicy `json:"results"`
+	Results []*FirewallPolicy `json:"results"`
 	Result
 }
 
 // List all FirewallPolicys
-func (c *WebClient) ListFirewallPolicys() (res []FirewallPolicy, err error) {
+func (c *WebClient) ListFirewallPolicys() (res []*FirewallPolicy, err error) {
 	var errmsg Result
 	var results FirewallPolicyResults
 	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy", nil, &results, nil)
 	if err != nil {
-		return []FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicys: %s", err.Error())
+		return []*FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicys: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicy: not found")
+			return []*FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicy: not found")
 		} else {
-			return []FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicy: %s", errmsg.Status)
+			return []*FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicy: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -922,22 +922,22 @@ func (c *WebClient) ListFirewallPolicys() (res []FirewallPolicy, err error) {
 }
 
 // Get a FirewallPolicy by name
-func (c *WebClient) GetFirewallPolicy(name string) (res FirewallPolicy, err error) {
+func (c *WebClient) GetFirewallPolicy(name string) (res *FirewallPolicy, err error) {
 	var errmsg Result
 	var results FirewallPolicyResults
 	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy/"+name, nil, &results, &errmsg)
 	if err != nil {
-		return FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': %s", name, err.Error())
+		return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': %s", name, err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': not found", name)
+			return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': not found", name)
 		} else {
-			return FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': %s", name, errmsg.Status)
+			return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': %s", name, errmsg.Status)
 		}
 	}
 	if len(results.Results) == 0 {
-		return FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': not found", name)
+		return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': not found", name)
 	}
 
 	res = results.Results[0]
@@ -1000,4 +1000,39 @@ func (c *WebClient) DeleteFirewallPolicy(name string) (err error) {
 	}
 
 	return
+}
+
+// List all FirewallPolicys
+func (c *FakeClient) ListFirewallPolicys() (res []*FirewallPolicy, err error) {
+	for _, r := range c.FirewallPolicys {
+		res = append(res, r)
+	}
+	return
+}
+
+// Get a FirewallPolicy by name
+func (c *FakeClient) GetFirewallPolicy(name string) (*FirewallPolicy, error) {
+	if res, ok := c.FirewallPolicys[name]; ok {
+		return res, nil
+	} else {
+		return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': not found", name)
+	}
+}
+
+// Create a new FirewallPolicy
+func (c *FakeClient) CreateFirewallPolicy(obj *FirewallPolicy) (err error) {
+	c.FirewallPolicys[obj.Name] = obj
+	return nil
+}
+
+// Update a FirewallPolicy
+func (c *FakeClient) UpdateFirewallPolicy(obj *FirewallPolicy) (err error) {
+	c.FirewallPolicys[obj.Name] = obj
+	return nil
+}
+
+// Delete a FirewallPolicy by name
+func (c *FakeClient) DeleteFirewallPolicy(name string) (err error) {
+	delete(c.FirewallPolicys, name)
+	return nil
 }

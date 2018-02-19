@@ -6,10 +6,10 @@ package fortigate
 type Client interface {
 
 	// List all FirewallAddresss
-	ListFirewallAddresss() ([]FirewallAddress, error)
+	ListFirewallAddresss() ([]*FirewallAddress, error)
 
 	// Get a FirewallAddress by name
-	GetFirewallAddress(name string) (FirewallAddress, error)
+	GetFirewallAddress(name string) (*FirewallAddress, error)
 
 	// Create a new FirewallAddress
 	CreateFirewallAddress(*FirewallAddress) error
@@ -21,10 +21,10 @@ type Client interface {
 	DeleteFirewallAddress(name string) error
 
 	// List all FirewallPolicys
-	ListFirewallPolicys() ([]FirewallPolicy, error)
+	ListFirewallPolicys() ([]*FirewallPolicy, error)
 
 	// Get a FirewallPolicy by name
-	GetFirewallPolicy(name string) (FirewallPolicy, error)
+	GetFirewallPolicy(name string) (*FirewallPolicy, error)
 
 	// Create a new FirewallPolicy
 	CreateFirewallPolicy(*FirewallPolicy) error
@@ -36,10 +36,10 @@ type Client interface {
 	DeleteFirewallPolicy(name string) error
 
 	// List all VIPs
-	ListVIPs() ([]VIP, error)
+	ListVIPs() ([]*VIP, error)
 
 	// Get a VIP by name
-	GetVIP(name string) (VIP, error)
+	GetVIP(name string) (*VIP, error)
 
 	// Create a new VIP
 	CreateVIP(*VIP) error
