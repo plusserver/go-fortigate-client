@@ -3,9 +3,9 @@ package fortigate
 import (
 	"crypto/tls"
 	"net/http"
+	"strings"
 
 	"gopkg.in/jmcvetta/napping.v3"
-	"strings"
 )
 
 type WebClient struct {
@@ -13,6 +13,7 @@ type WebClient struct {
 	User     string
 	Password string
 	ApiKey   string
+	Log      bool
 
 	napping napping.Session
 }
@@ -20,7 +21,6 @@ type WebClient struct {
 type Result struct {
 	HTTPMethod string `json:"http_method"`
 	Revision   string `json:"revision"`
-	//Mkey       int    `json:"mkey"`
 	Status     string `json:"status"`
 	HTTPStatus int    `json:"http_status"`
 	Vdom       string `json:"vdom"`
@@ -40,7 +40,7 @@ func NewWebClient(c WebClient) *WebClient {
 
 	session := napping.Session{
 		Client: client,
-		Log:    true,
+		Log:    c.Log,
 	}
 
 	if c.ApiKey != "" {
