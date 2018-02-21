@@ -20,7 +20,7 @@ type WebClient struct {
 type Result struct {
 	HTTPMethod string `json:"http_method"`
 	Revision   string `json:"revision"`
-	Mkey       string `json:"mkey"`
+	//Mkey       int    `json:"mkey"`
 	Status     string `json:"status"`
 	HTTPStatus int    `json:"http_status"`
 	Vdom       string `json:"vdom"`
@@ -40,7 +40,7 @@ func NewWebClient(c WebClient) *WebClient {
 
 	session := napping.Session{
 		Client: client,
-		//Log:    true,
+		Log:    true,
 	}
 
 	if c.ApiKey != "" {

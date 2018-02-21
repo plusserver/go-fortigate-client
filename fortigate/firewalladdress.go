@@ -165,6 +165,7 @@ type FirewallAddress struct {
 // The results of a Get or List operation
 type FirewallAddressResults struct {
 	Results []*FirewallAddress `json:"results"`
+	Mkey    string             `json:"mkey"`
 	Result
 }
 
@@ -211,18 +212,18 @@ func (c *WebClient) GetFirewallAddress(name string) (res *FirewallAddress, err e
 }
 
 // Create a new FirewallAddress
-func (c *WebClient) CreateFirewallAddress(obj *FirewallAddress) (err error) {
+func (c *WebClient) CreateFirewallAddress(obj *FirewallAddress) (id string, err error) {
 	var errmsg Result
 	var results FirewallAddressResults
 	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/address", obj, &results, &errmsg)
 	if err != nil {
-		return fmt.Errorf("error creating FirewallAddress '%s': %s", obj.Name, err.Error())
+		return "", fmt.Errorf("error creating FirewallAddress '%s': %s", obj.Name, err.Error())
 	}
 	if results.HTTPStatus == 200 {
 		return
 	}
 	if errmsg.HTTPStatus != 200 {
-		return fmt.Errorf("error creating FirewallAddress '%s': %s", obj.Name, errmsg.Status)
+		return "", fmt.Errorf("error creating FirewallAddress '%s': %s", obj.Name, errmsg.Status)
 	}
 
 	return
@@ -286,9 +287,9 @@ func (c *FakeClient) GetFirewallAddress(name string) (*FirewallAddress, error) {
 }
 
 // Create a new FirewallAddress
-func (c *FakeClient) CreateFirewallAddress(obj *FirewallAddress) (err error) {
+func (c *FakeClient) CreateFirewallAddress(obj *FirewallAddress) (id string, err error) {
 	c.FirewallAddresss[obj.Name] = obj
-	return nil
+	return "", nil
 }
 
 // Update a FirewallAddress

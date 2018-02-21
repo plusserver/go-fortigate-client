@@ -5,6 +5,7 @@ import "net/url"
 type SchemaResults struct {
 	Name     string                 `json:"name"`
 	Category string                 `json:"category"`
+	MkeyType string                 `json:"mkey_type",omitempty`
 	Help     string                 `json:"help"`
 	Children map[string]SchemaChild `json:"children"`
 }

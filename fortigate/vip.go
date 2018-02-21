@@ -398,6 +398,7 @@ type VIP struct {
 // The results of a Get or List operation
 type VIPResults struct {
 	Results []*VIP `json:"results"`
+	Mkey    string `json:"mkey"`
 	Result
 }
 
@@ -444,18 +445,18 @@ func (c *WebClient) GetVIP(name string) (res *VIP, err error) {
 }
 
 // Create a new VIP
-func (c *WebClient) CreateVIP(obj *VIP) (err error) {
+func (c *WebClient) CreateVIP(obj *VIP) (id string, err error) {
 	var errmsg Result
 	var results VIPResults
 	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vip", obj, &results, &errmsg)
 	if err != nil {
-		return fmt.Errorf("error creating VIP '%s': %s", obj.Name, err.Error())
+		return "", fmt.Errorf("error creating VIP '%s': %s", obj.Name, err.Error())
 	}
 	if results.HTTPStatus == 200 {
 		return
 	}
 	if errmsg.HTTPStatus != 200 {
-		return fmt.Errorf("error creating VIP '%s': %s", obj.Name, errmsg.Status)
+		return "", fmt.Errorf("error creating VIP '%s': %s", obj.Name, errmsg.Status)
 	}
 
 	return
@@ -519,9 +520,9 @@ func (c *FakeClient) GetVIP(name string) (*VIP, error) {
 }
 
 // Create a new VIP
-func (c *FakeClient) CreateVIP(obj *VIP) (err error) {
+func (c *FakeClient) CreateVIP(obj *VIP) (id string, err error) {
 	c.VIPs[obj.Name] = obj
-	return nil
+	return "", nil
 }
 
 // Update a VIP

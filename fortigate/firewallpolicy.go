@@ -899,6 +899,7 @@ type FirewallPolicy struct {
 // The results of a Get or List operation
 type FirewallPolicyResults struct {
 	Results []*FirewallPolicy `json:"results"`
+	Mkey    int               `json:"mkey"`
 	Result
 }
 
@@ -945,18 +946,18 @@ func (c *WebClient) GetFirewallPolicy(name string) (res *FirewallPolicy, err err
 }
 
 // Create a new FirewallPolicy
-func (c *WebClient) CreateFirewallPolicy(obj *FirewallPolicy) (err error) {
+func (c *WebClient) CreateFirewallPolicy(obj *FirewallPolicy) (id int, err error) {
 	var errmsg Result
 	var results FirewallPolicyResults
 	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/policy", obj, &results, &errmsg)
 	if err != nil {
-		return fmt.Errorf("error creating FirewallPolicy '%s': %s", obj.Name, err.Error())
+		return 0, fmt.Errorf("error creating FirewallPolicy '%s': %s", obj.Name, err.Error())
 	}
 	if results.HTTPStatus == 200 {
 		return
 	}
 	if errmsg.HTTPStatus != 200 {
-		return fmt.Errorf("error creating FirewallPolicy '%s': %s", obj.Name, errmsg.Status)
+		return 0, fmt.Errorf("error creating FirewallPolicy '%s': %s", obj.Name, errmsg.Status)
 	}
 
 	return
@@ -1020,9 +1021,9 @@ func (c *FakeClient) GetFirewallPolicy(name string) (*FirewallPolicy, error) {
 }
 
 // Create a new FirewallPolicy
-func (c *FakeClient) CreateFirewallPolicy(obj *FirewallPolicy) (err error) {
+func (c *FakeClient) CreateFirewallPolicy(obj *FirewallPolicy) (id int, err error) {
 	c.FirewallPolicys[obj.Name] = obj
-	return nil
+	return 0, nil
 }
 
 // Update a FirewallPolicy

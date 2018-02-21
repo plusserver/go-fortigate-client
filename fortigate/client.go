@@ -12,7 +12,7 @@ type Client interface {
 	GetFirewallAddress(name string) (*FirewallAddress, error)
 
 	// Create a new FirewallAddress
-	CreateFirewallAddress(*FirewallAddress) error
+	CreateFirewallAddress(*FirewallAddress) (string, error)
 
 	// Update a FirewallAddress
 	UpdateFirewallAddress(*FirewallAddress) error
@@ -27,7 +27,7 @@ type Client interface {
 	GetFirewallPolicy(name string) (*FirewallPolicy, error)
 
 	// Create a new FirewallPolicy
-	CreateFirewallPolicy(*FirewallPolicy) error
+	CreateFirewallPolicy(*FirewallPolicy) (int, error)
 
 	// Update a FirewallPolicy
 	UpdateFirewallPolicy(*FirewallPolicy) error
@@ -42,7 +42,7 @@ type Client interface {
 	GetVIP(name string) (*VIP, error)
 
 	// Create a new VIP
-	CreateVIP(*VIP) error
+	CreateVIP(*VIP) (string, error)
 
 	// Update a VIP
 	UpdateVIP(*VIP) error
