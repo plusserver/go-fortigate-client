@@ -1,10 +1,12 @@
 # go-fortigate-client
 
-Fortigate GO API client.
+Fortigate GO API client. Supports operations on "firewall", "certificate" and "vpn" for now.
 
 How to use:
 
 ```go
+import "github.com/Nexinto/go-fortigate-client/fortigate"
+
 c := fortigate.NewWebClient(fortigate.WebClient{
 	URL: os.Getenv("FORTIGATE_URL"),
 	ApiKey: os.Getenv("FORTIGATE_API_KEY")})
@@ -27,12 +29,24 @@ vip := &fortigate.VIP{
 		},
 	}
 	
-err := c.CreateVIP(vip)
-	
+id, err := c.CreateVIP(vip)
+
 ...
 
-err := c.DeleteVIP("myvip")
+err = c.UpdateVIP(vip)
+
+...
+
+err := c.DeleteVIP(id)
 
 ```
 
 See `fgcmd.go` for more examples.
+
+Create a Fake client for testing:
+
+```go
+
+c := fortigate.NewFakeClient()
+
+```

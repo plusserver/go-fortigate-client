@@ -1,3 +1,3 @@
-rm -f fortigate/{client,fake,firewalladdress,firewallpolicy,vip}.go
+rm fortigate/types.go
 go run fortigate/gen/generator.go
-go fmt fortigate/*.go
+go fmt fortigate/types.go
