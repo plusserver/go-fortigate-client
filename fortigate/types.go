@@ -1188,15 +1188,15 @@ type FirewallAddressResults struct {
 func (c *WebClient) ListFirewallAddresss() (res []*FirewallAddress, err error) {
 	var errmsg Result
 	var results FirewallAddressResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/address", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/address", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallAddress{}, fmt.Errorf("error listing FirewallAddresss: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallAddress{}, fmt.Errorf("error listing FirewallAddress: not found")
+			return []*FirewallAddress{}, fmt.Errorf("error listing FirewallAddresss: not found")
 		} else {
-			return []*FirewallAddress{}, fmt.Errorf("error listing FirewallAddress: %s", errmsg.Status)
+			return []*FirewallAddress{}, fmt.Errorf("error listing FirewallAddresss: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -1207,7 +1207,7 @@ func (c *WebClient) ListFirewallAddresss() (res []*FirewallAddress, err error) {
 func (c *WebClient) GetFirewallAddress(mkey string) (res *FirewallAddress, err error) {
 	var errmsg Result
 	var results FirewallAddressResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/address/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/address/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallAddress{}, fmt.Errorf("error getting FirewallAddress '%s': %s", mkey, err.Error())
 	}
@@ -1230,7 +1230,7 @@ func (c *WebClient) GetFirewallAddress(mkey string) (res *FirewallAddress, err e
 func (c *WebClient) CreateFirewallAddress(obj *FirewallAddress) (id string, err error) {
 	var errmsg Result
 	var results FirewallAddressResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/address", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/address", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallAddress '%s': %s", obj.Name, err.Error())
 	}
@@ -1248,7 +1248,7 @@ func (c *WebClient) CreateFirewallAddress(obj *FirewallAddress) (id string, err 
 func (c *WebClient) UpdateFirewallAddress(obj *FirewallAddress) (err error) {
 	var errmsg Result
 	var results FirewallAddressResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/address/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/address/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallAddress '%s': %s", obj.Name, err.Error())
 	}
@@ -1267,7 +1267,7 @@ func (c *WebClient) UpdateFirewallAddress(obj *FirewallAddress) (err error) {
 func (c *WebClient) DeleteFirewallAddress(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallAddressResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/address/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/address/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallAddress '%s': %s", mkey, err.Error())
 	}
@@ -1399,15 +1399,15 @@ type FirewallMulticastAddressResults struct {
 func (c *WebClient) ListFirewallMulticastAddresss() (res []*FirewallMulticastAddress, err error) {
 	var errmsg Result
 	var results FirewallMulticastAddressResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/multicast-address", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/multicast-address", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallMulticastAddress{}, fmt.Errorf("error listing FirewallMulticastAddresss: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallMulticastAddress{}, fmt.Errorf("error listing FirewallMulticastAddress: not found")
+			return []*FirewallMulticastAddress{}, fmt.Errorf("error listing FirewallMulticastAddresss: not found")
 		} else {
-			return []*FirewallMulticastAddress{}, fmt.Errorf("error listing FirewallMulticastAddress: %s", errmsg.Status)
+			return []*FirewallMulticastAddress{}, fmt.Errorf("error listing FirewallMulticastAddresss: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -1418,7 +1418,7 @@ func (c *WebClient) ListFirewallMulticastAddresss() (res []*FirewallMulticastAdd
 func (c *WebClient) GetFirewallMulticastAddress(mkey string) (res *FirewallMulticastAddress, err error) {
 	var errmsg Result
 	var results FirewallMulticastAddressResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/multicast-address/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/multicast-address/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallMulticastAddress{}, fmt.Errorf("error getting FirewallMulticastAddress '%s': %s", mkey, err.Error())
 	}
@@ -1441,7 +1441,7 @@ func (c *WebClient) GetFirewallMulticastAddress(mkey string) (res *FirewallMulti
 func (c *WebClient) CreateFirewallMulticastAddress(obj *FirewallMulticastAddress) (id string, err error) {
 	var errmsg Result
 	var results FirewallMulticastAddressResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/multicast-address", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/multicast-address", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallMulticastAddress '%s': %s", obj.Name, err.Error())
 	}
@@ -1459,7 +1459,7 @@ func (c *WebClient) CreateFirewallMulticastAddress(obj *FirewallMulticastAddress
 func (c *WebClient) UpdateFirewallMulticastAddress(obj *FirewallMulticastAddress) (err error) {
 	var errmsg Result
 	var results FirewallMulticastAddressResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/multicast-address/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/multicast-address/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallMulticastAddress '%s': %s", obj.Name, err.Error())
 	}
@@ -1478,7 +1478,7 @@ func (c *WebClient) UpdateFirewallMulticastAddress(obj *FirewallMulticastAddress
 func (c *WebClient) DeleteFirewallMulticastAddress(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallMulticastAddressResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/multicast-address/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/multicast-address/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallMulticastAddress '%s': %s", mkey, err.Error())
 	}
@@ -1637,15 +1637,15 @@ type FirewallAddress6Results struct {
 func (c *WebClient) ListFirewallAddress6s() (res []*FirewallAddress6, err error) {
 	var errmsg Result
 	var results FirewallAddress6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/address6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/address6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallAddress6{}, fmt.Errorf("error listing FirewallAddress6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallAddress6{}, fmt.Errorf("error listing FirewallAddress6: not found")
+			return []*FirewallAddress6{}, fmt.Errorf("error listing FirewallAddress6s: not found")
 		} else {
-			return []*FirewallAddress6{}, fmt.Errorf("error listing FirewallAddress6: %s", errmsg.Status)
+			return []*FirewallAddress6{}, fmt.Errorf("error listing FirewallAddress6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -1656,7 +1656,7 @@ func (c *WebClient) ListFirewallAddress6s() (res []*FirewallAddress6, err error)
 func (c *WebClient) GetFirewallAddress6(mkey string) (res *FirewallAddress6, err error) {
 	var errmsg Result
 	var results FirewallAddress6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/address6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/address6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallAddress6{}, fmt.Errorf("error getting FirewallAddress6 '%s': %s", mkey, err.Error())
 	}
@@ -1679,7 +1679,7 @@ func (c *WebClient) GetFirewallAddress6(mkey string) (res *FirewallAddress6, err
 func (c *WebClient) CreateFirewallAddress6(obj *FirewallAddress6) (id string, err error) {
 	var errmsg Result
 	var results FirewallAddress6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/address6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/address6", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallAddress6 '%s': %s", obj.Name, err.Error())
 	}
@@ -1697,7 +1697,7 @@ func (c *WebClient) CreateFirewallAddress6(obj *FirewallAddress6) (id string, er
 func (c *WebClient) UpdateFirewallAddress6(obj *FirewallAddress6) (err error) {
 	var errmsg Result
 	var results FirewallAddress6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/address6/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/address6/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallAddress6 '%s': %s", obj.Name, err.Error())
 	}
@@ -1716,7 +1716,7 @@ func (c *WebClient) UpdateFirewallAddress6(obj *FirewallAddress6) (err error) {
 func (c *WebClient) DeleteFirewallAddress6(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallAddress6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/address6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/address6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallAddress6 '%s': %s", mkey, err.Error())
 	}
@@ -1825,15 +1825,15 @@ type FirewallMulticastAddress6Results struct {
 func (c *WebClient) ListFirewallMulticastAddress6s() (res []*FirewallMulticastAddress6, err error) {
 	var errmsg Result
 	var results FirewallMulticastAddress6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/multicast-address6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/multicast-address6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallMulticastAddress6{}, fmt.Errorf("error listing FirewallMulticastAddress6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallMulticastAddress6{}, fmt.Errorf("error listing FirewallMulticastAddress6: not found")
+			return []*FirewallMulticastAddress6{}, fmt.Errorf("error listing FirewallMulticastAddress6s: not found")
 		} else {
-			return []*FirewallMulticastAddress6{}, fmt.Errorf("error listing FirewallMulticastAddress6: %s", errmsg.Status)
+			return []*FirewallMulticastAddress6{}, fmt.Errorf("error listing FirewallMulticastAddress6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -1844,7 +1844,7 @@ func (c *WebClient) ListFirewallMulticastAddress6s() (res []*FirewallMulticastAd
 func (c *WebClient) GetFirewallMulticastAddress6(mkey string) (res *FirewallMulticastAddress6, err error) {
 	var errmsg Result
 	var results FirewallMulticastAddress6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/multicast-address6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/multicast-address6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallMulticastAddress6{}, fmt.Errorf("error getting FirewallMulticastAddress6 '%s': %s", mkey, err.Error())
 	}
@@ -1867,7 +1867,7 @@ func (c *WebClient) GetFirewallMulticastAddress6(mkey string) (res *FirewallMult
 func (c *WebClient) CreateFirewallMulticastAddress6(obj *FirewallMulticastAddress6) (id string, err error) {
 	var errmsg Result
 	var results FirewallMulticastAddress6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/multicast-address6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/multicast-address6", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallMulticastAddress6 '%s': %s", obj.Name, err.Error())
 	}
@@ -1885,7 +1885,7 @@ func (c *WebClient) CreateFirewallMulticastAddress6(obj *FirewallMulticastAddres
 func (c *WebClient) UpdateFirewallMulticastAddress6(obj *FirewallMulticastAddress6) (err error) {
 	var errmsg Result
 	var results FirewallMulticastAddress6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/multicast-address6/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/multicast-address6/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallMulticastAddress6 '%s': %s", obj.Name, err.Error())
 	}
@@ -1904,7 +1904,7 @@ func (c *WebClient) UpdateFirewallMulticastAddress6(obj *FirewallMulticastAddres
 func (c *WebClient) DeleteFirewallMulticastAddress6(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallMulticastAddress6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/multicast-address6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/multicast-address6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallMulticastAddress6 '%s': %s", mkey, err.Error())
 	}
@@ -2037,15 +2037,15 @@ type FirewallAddrgrpResults struct {
 func (c *WebClient) ListFirewallAddrgrps() (res []*FirewallAddrgrp, err error) {
 	var errmsg Result
 	var results FirewallAddrgrpResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/addrgrp", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/addrgrp", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallAddrgrp{}, fmt.Errorf("error listing FirewallAddrgrps: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallAddrgrp{}, fmt.Errorf("error listing FirewallAddrgrp: not found")
+			return []*FirewallAddrgrp{}, fmt.Errorf("error listing FirewallAddrgrps: not found")
 		} else {
-			return []*FirewallAddrgrp{}, fmt.Errorf("error listing FirewallAddrgrp: %s", errmsg.Status)
+			return []*FirewallAddrgrp{}, fmt.Errorf("error listing FirewallAddrgrps: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -2056,7 +2056,7 @@ func (c *WebClient) ListFirewallAddrgrps() (res []*FirewallAddrgrp, err error) {
 func (c *WebClient) GetFirewallAddrgrp(mkey string) (res *FirewallAddrgrp, err error) {
 	var errmsg Result
 	var results FirewallAddrgrpResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/addrgrp/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/addrgrp/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallAddrgrp{}, fmt.Errorf("error getting FirewallAddrgrp '%s': %s", mkey, err.Error())
 	}
@@ -2079,7 +2079,7 @@ func (c *WebClient) GetFirewallAddrgrp(mkey string) (res *FirewallAddrgrp, err e
 func (c *WebClient) CreateFirewallAddrgrp(obj *FirewallAddrgrp) (id string, err error) {
 	var errmsg Result
 	var results FirewallAddrgrpResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/addrgrp", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/addrgrp", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallAddrgrp '%s': %s", obj.Name, err.Error())
 	}
@@ -2097,7 +2097,7 @@ func (c *WebClient) CreateFirewallAddrgrp(obj *FirewallAddrgrp) (id string, err 
 func (c *WebClient) UpdateFirewallAddrgrp(obj *FirewallAddrgrp) (err error) {
 	var errmsg Result
 	var results FirewallAddrgrpResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/addrgrp/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/addrgrp/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallAddrgrp '%s': %s", obj.Name, err.Error())
 	}
@@ -2116,7 +2116,7 @@ func (c *WebClient) UpdateFirewallAddrgrp(obj *FirewallAddrgrp) (err error) {
 func (c *WebClient) DeleteFirewallAddrgrp(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallAddrgrpResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/addrgrp/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/addrgrp/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallAddrgrp '%s': %s", mkey, err.Error())
 	}
@@ -2235,15 +2235,15 @@ type FirewallAddrgrp6Results struct {
 func (c *WebClient) ListFirewallAddrgrp6s() (res []*FirewallAddrgrp6, err error) {
 	var errmsg Result
 	var results FirewallAddrgrp6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/addrgrp6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/addrgrp6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallAddrgrp6{}, fmt.Errorf("error listing FirewallAddrgrp6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallAddrgrp6{}, fmt.Errorf("error listing FirewallAddrgrp6: not found")
+			return []*FirewallAddrgrp6{}, fmt.Errorf("error listing FirewallAddrgrp6s: not found")
 		} else {
-			return []*FirewallAddrgrp6{}, fmt.Errorf("error listing FirewallAddrgrp6: %s", errmsg.Status)
+			return []*FirewallAddrgrp6{}, fmt.Errorf("error listing FirewallAddrgrp6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -2254,7 +2254,7 @@ func (c *WebClient) ListFirewallAddrgrp6s() (res []*FirewallAddrgrp6, err error)
 func (c *WebClient) GetFirewallAddrgrp6(mkey string) (res *FirewallAddrgrp6, err error) {
 	var errmsg Result
 	var results FirewallAddrgrp6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/addrgrp6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/addrgrp6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallAddrgrp6{}, fmt.Errorf("error getting FirewallAddrgrp6 '%s': %s", mkey, err.Error())
 	}
@@ -2277,7 +2277,7 @@ func (c *WebClient) GetFirewallAddrgrp6(mkey string) (res *FirewallAddrgrp6, err
 func (c *WebClient) CreateFirewallAddrgrp6(obj *FirewallAddrgrp6) (id string, err error) {
 	var errmsg Result
 	var results FirewallAddrgrp6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/addrgrp6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/addrgrp6", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallAddrgrp6 '%s': %s", obj.Name, err.Error())
 	}
@@ -2295,7 +2295,7 @@ func (c *WebClient) CreateFirewallAddrgrp6(obj *FirewallAddrgrp6) (id string, er
 func (c *WebClient) UpdateFirewallAddrgrp6(obj *FirewallAddrgrp6) (err error) {
 	var errmsg Result
 	var results FirewallAddrgrp6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/addrgrp6/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/addrgrp6/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallAddrgrp6 '%s': %s", obj.Name, err.Error())
 	}
@@ -2314,7 +2314,7 @@ func (c *WebClient) UpdateFirewallAddrgrp6(obj *FirewallAddrgrp6) (err error) {
 func (c *WebClient) DeleteFirewallAddrgrp6(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallAddrgrp6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/addrgrp6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/addrgrp6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallAddrgrp6 '%s': %s", mkey, err.Error())
 	}
@@ -2424,15 +2424,15 @@ type FirewallInternetServiceResults struct {
 func (c *WebClient) ListFirewallInternetServices() (res []*FirewallInternetService, err error) {
 	var errmsg Result
 	var results FirewallInternetServiceResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/internet-service", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/internet-service", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallInternetService{}, fmt.Errorf("error listing FirewallInternetServices: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallInternetService{}, fmt.Errorf("error listing FirewallInternetService: not found")
+			return []*FirewallInternetService{}, fmt.Errorf("error listing FirewallInternetServices: not found")
 		} else {
-			return []*FirewallInternetService{}, fmt.Errorf("error listing FirewallInternetService: %s", errmsg.Status)
+			return []*FirewallInternetService{}, fmt.Errorf("error listing FirewallInternetServices: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -2443,7 +2443,7 @@ func (c *WebClient) ListFirewallInternetServices() (res []*FirewallInternetServi
 func (c *WebClient) GetFirewallInternetService(mkey int) (res *FirewallInternetService, err error) {
 	var errmsg Result
 	var results FirewallInternetServiceResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/internet-service/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/internet-service/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallInternetService{}, fmt.Errorf("error getting FirewallInternetService '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -2466,7 +2466,7 @@ func (c *WebClient) GetFirewallInternetService(mkey int) (res *FirewallInternetS
 func (c *WebClient) CreateFirewallInternetService(obj *FirewallInternetService) (id int, err error) {
 	var errmsg Result
 	var results FirewallInternetServiceResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/internet-service", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/internet-service", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallInternetService '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -2484,7 +2484,7 @@ func (c *WebClient) CreateFirewallInternetService(obj *FirewallInternetService) 
 func (c *WebClient) UpdateFirewallInternetService(obj *FirewallInternetService) (err error) {
 	var errmsg Result
 	var results FirewallInternetServiceResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/internet-service/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/internet-service/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallInternetService '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -2503,7 +2503,7 @@ func (c *WebClient) UpdateFirewallInternetService(obj *FirewallInternetService) 
 func (c *WebClient) DeleteFirewallInternetService(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallInternetServiceResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/internet-service/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/internet-service/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallInternetService '%s': %s", mkey, err.Error())
 	}
@@ -2624,15 +2624,15 @@ type FirewallInternetServiceCustomResults struct {
 func (c *WebClient) ListFirewallInternetServiceCustoms() (res []*FirewallInternetServiceCustom, err error) {
 	var errmsg Result
 	var results FirewallInternetServiceCustomResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/internet-service-custom", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/internet-service-custom", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallInternetServiceCustom{}, fmt.Errorf("error listing FirewallInternetServiceCustoms: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallInternetServiceCustom{}, fmt.Errorf("error listing FirewallInternetServiceCustom: not found")
+			return []*FirewallInternetServiceCustom{}, fmt.Errorf("error listing FirewallInternetServiceCustoms: not found")
 		} else {
-			return []*FirewallInternetServiceCustom{}, fmt.Errorf("error listing FirewallInternetServiceCustom: %s", errmsg.Status)
+			return []*FirewallInternetServiceCustom{}, fmt.Errorf("error listing FirewallInternetServiceCustoms: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -2643,7 +2643,7 @@ func (c *WebClient) ListFirewallInternetServiceCustoms() (res []*FirewallInterne
 func (c *WebClient) GetFirewallInternetServiceCustom(mkey string) (res *FirewallInternetServiceCustom, err error) {
 	var errmsg Result
 	var results FirewallInternetServiceCustomResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/internet-service-custom/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/internet-service-custom/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallInternetServiceCustom{}, fmt.Errorf("error getting FirewallInternetServiceCustom '%s': %s", mkey, err.Error())
 	}
@@ -2666,7 +2666,7 @@ func (c *WebClient) GetFirewallInternetServiceCustom(mkey string) (res *Firewall
 func (c *WebClient) CreateFirewallInternetServiceCustom(obj *FirewallInternetServiceCustom) (id string, err error) {
 	var errmsg Result
 	var results FirewallInternetServiceCustomResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/internet-service-custom", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/internet-service-custom", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallInternetServiceCustom '%s': %s", obj.Name, err.Error())
 	}
@@ -2684,7 +2684,7 @@ func (c *WebClient) CreateFirewallInternetServiceCustom(obj *FirewallInternetSer
 func (c *WebClient) UpdateFirewallInternetServiceCustom(obj *FirewallInternetServiceCustom) (err error) {
 	var errmsg Result
 	var results FirewallInternetServiceCustomResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/internet-service-custom/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/internet-service-custom/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallInternetServiceCustom '%s': %s", obj.Name, err.Error())
 	}
@@ -2703,7 +2703,7 @@ func (c *WebClient) UpdateFirewallInternetServiceCustom(obj *FirewallInternetSer
 func (c *WebClient) DeleteFirewallInternetServiceCustom(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallInternetServiceCustomResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/internet-service-custom/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/internet-service-custom/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallInternetServiceCustom '%s': %s", mkey, err.Error())
 	}
@@ -2854,15 +2854,15 @@ type FirewallIppoolResults struct {
 func (c *WebClient) ListFirewallIppools() (res []*FirewallIppool, err error) {
 	var errmsg Result
 	var results FirewallIppoolResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ippool", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ippool", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallIppool{}, fmt.Errorf("error listing FirewallIppools: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallIppool{}, fmt.Errorf("error listing FirewallIppool: not found")
+			return []*FirewallIppool{}, fmt.Errorf("error listing FirewallIppools: not found")
 		} else {
-			return []*FirewallIppool{}, fmt.Errorf("error listing FirewallIppool: %s", errmsg.Status)
+			return []*FirewallIppool{}, fmt.Errorf("error listing FirewallIppools: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -2873,7 +2873,7 @@ func (c *WebClient) ListFirewallIppools() (res []*FirewallIppool, err error) {
 func (c *WebClient) GetFirewallIppool(mkey string) (res *FirewallIppool, err error) {
 	var errmsg Result
 	var results FirewallIppoolResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ippool/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ippool/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallIppool{}, fmt.Errorf("error getting FirewallIppool '%s': %s", mkey, err.Error())
 	}
@@ -2896,7 +2896,7 @@ func (c *WebClient) GetFirewallIppool(mkey string) (res *FirewallIppool, err err
 func (c *WebClient) CreateFirewallIppool(obj *FirewallIppool) (id string, err error) {
 	var errmsg Result
 	var results FirewallIppoolResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/ippool", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/ippool", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallIppool '%s': %s", obj.Name, err.Error())
 	}
@@ -2914,7 +2914,7 @@ func (c *WebClient) CreateFirewallIppool(obj *FirewallIppool) (id string, err er
 func (c *WebClient) UpdateFirewallIppool(obj *FirewallIppool) (err error) {
 	var errmsg Result
 	var results FirewallIppoolResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/ippool/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/ippool/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallIppool '%s': %s", obj.Name, err.Error())
 	}
@@ -2933,7 +2933,7 @@ func (c *WebClient) UpdateFirewallIppool(obj *FirewallIppool) (err error) {
 func (c *WebClient) DeleteFirewallIppool(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallIppoolResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/ippool/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/ippool/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallIppool '%s': %s", mkey, err.Error())
 	}
@@ -3018,15 +3018,15 @@ type FirewallIppool6Results struct {
 func (c *WebClient) ListFirewallIppool6s() (res []*FirewallIppool6, err error) {
 	var errmsg Result
 	var results FirewallIppool6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ippool6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ippool6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallIppool6{}, fmt.Errorf("error listing FirewallIppool6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallIppool6{}, fmt.Errorf("error listing FirewallIppool6: not found")
+			return []*FirewallIppool6{}, fmt.Errorf("error listing FirewallIppool6s: not found")
 		} else {
-			return []*FirewallIppool6{}, fmt.Errorf("error listing FirewallIppool6: %s", errmsg.Status)
+			return []*FirewallIppool6{}, fmt.Errorf("error listing FirewallIppool6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -3037,7 +3037,7 @@ func (c *WebClient) ListFirewallIppool6s() (res []*FirewallIppool6, err error) {
 func (c *WebClient) GetFirewallIppool6(mkey string) (res *FirewallIppool6, err error) {
 	var errmsg Result
 	var results FirewallIppool6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ippool6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ippool6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallIppool6{}, fmt.Errorf("error getting FirewallIppool6 '%s': %s", mkey, err.Error())
 	}
@@ -3060,7 +3060,7 @@ func (c *WebClient) GetFirewallIppool6(mkey string) (res *FirewallIppool6, err e
 func (c *WebClient) CreateFirewallIppool6(obj *FirewallIppool6) (id string, err error) {
 	var errmsg Result
 	var results FirewallIppool6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/ippool6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/ippool6", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallIppool6 '%s': %s", obj.Name, err.Error())
 	}
@@ -3078,7 +3078,7 @@ func (c *WebClient) CreateFirewallIppool6(obj *FirewallIppool6) (id string, err 
 func (c *WebClient) UpdateFirewallIppool6(obj *FirewallIppool6) (err error) {
 	var errmsg Result
 	var results FirewallIppool6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/ippool6/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/ippool6/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallIppool6 '%s': %s", obj.Name, err.Error())
 	}
@@ -3097,7 +3097,7 @@ func (c *WebClient) UpdateFirewallIppool6(obj *FirewallIppool6) (err error) {
 func (c *WebClient) DeleteFirewallIppool6(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallIppool6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/ippool6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/ippool6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallIppool6 '%s': %s", mkey, err.Error())
 	}
@@ -3211,15 +3211,15 @@ type FirewallLdbMonitorResults struct {
 func (c *WebClient) ListFirewallLdbMonitors() (res []*FirewallLdbMonitor, err error) {
 	var errmsg Result
 	var results FirewallLdbMonitorResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ldb-monitor", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ldb-monitor", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallLdbMonitor{}, fmt.Errorf("error listing FirewallLdbMonitors: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallLdbMonitor{}, fmt.Errorf("error listing FirewallLdbMonitor: not found")
+			return []*FirewallLdbMonitor{}, fmt.Errorf("error listing FirewallLdbMonitors: not found")
 		} else {
-			return []*FirewallLdbMonitor{}, fmt.Errorf("error listing FirewallLdbMonitor: %s", errmsg.Status)
+			return []*FirewallLdbMonitor{}, fmt.Errorf("error listing FirewallLdbMonitors: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -3230,7 +3230,7 @@ func (c *WebClient) ListFirewallLdbMonitors() (res []*FirewallLdbMonitor, err er
 func (c *WebClient) GetFirewallLdbMonitor(mkey string) (res *FirewallLdbMonitor, err error) {
 	var errmsg Result
 	var results FirewallLdbMonitorResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ldb-monitor/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ldb-monitor/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallLdbMonitor{}, fmt.Errorf("error getting FirewallLdbMonitor '%s': %s", mkey, err.Error())
 	}
@@ -3253,7 +3253,7 @@ func (c *WebClient) GetFirewallLdbMonitor(mkey string) (res *FirewallLdbMonitor,
 func (c *WebClient) CreateFirewallLdbMonitor(obj *FirewallLdbMonitor) (id string, err error) {
 	var errmsg Result
 	var results FirewallLdbMonitorResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/ldb-monitor", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/ldb-monitor", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallLdbMonitor '%s': %s", obj.Name, err.Error())
 	}
@@ -3271,7 +3271,7 @@ func (c *WebClient) CreateFirewallLdbMonitor(obj *FirewallLdbMonitor) (id string
 func (c *WebClient) UpdateFirewallLdbMonitor(obj *FirewallLdbMonitor) (err error) {
 	var errmsg Result
 	var results FirewallLdbMonitorResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/ldb-monitor/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/ldb-monitor/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallLdbMonitor '%s': %s", obj.Name, err.Error())
 	}
@@ -3290,7 +3290,7 @@ func (c *WebClient) UpdateFirewallLdbMonitor(obj *FirewallLdbMonitor) (err error
 func (c *WebClient) DeleteFirewallLdbMonitor(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallLdbMonitorResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/ldb-monitor/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/ldb-monitor/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallLdbMonitor '%s': %s", mkey, err.Error())
 	}
@@ -3777,15 +3777,15 @@ type FirewallVipResults struct {
 func (c *WebClient) ListFirewallVips() (res []*FirewallVip, err error) {
 	var errmsg Result
 	var results FirewallVipResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallVip{}, fmt.Errorf("error listing FirewallVips: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallVip{}, fmt.Errorf("error listing FirewallVip: not found")
+			return []*FirewallVip{}, fmt.Errorf("error listing FirewallVips: not found")
 		} else {
-			return []*FirewallVip{}, fmt.Errorf("error listing FirewallVip: %s", errmsg.Status)
+			return []*FirewallVip{}, fmt.Errorf("error listing FirewallVips: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -3796,7 +3796,7 @@ func (c *WebClient) ListFirewallVips() (res []*FirewallVip, err error) {
 func (c *WebClient) GetFirewallVip(mkey string) (res *FirewallVip, err error) {
 	var errmsg Result
 	var results FirewallVipResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallVip{}, fmt.Errorf("error getting FirewallVip '%s': %s", mkey, err.Error())
 	}
@@ -3819,7 +3819,7 @@ func (c *WebClient) GetFirewallVip(mkey string) (res *FirewallVip, err error) {
 func (c *WebClient) CreateFirewallVip(obj *FirewallVip) (id string, err error) {
 	var errmsg Result
 	var results FirewallVipResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/vip", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vip", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallVip '%s': %s", obj.Name, err.Error())
 	}
@@ -3837,7 +3837,7 @@ func (c *WebClient) CreateFirewallVip(obj *FirewallVip) (id string, err error) {
 func (c *WebClient) UpdateFirewallVip(obj *FirewallVip) (err error) {
 	var errmsg Result
 	var results FirewallVipResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/vip/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/vip/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallVip '%s': %s", obj.Name, err.Error())
 	}
@@ -3856,7 +3856,7 @@ func (c *WebClient) UpdateFirewallVip(obj *FirewallVip) (err error) {
 func (c *WebClient) DeleteFirewallVip(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallVipResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/vip/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/vip/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallVip '%s': %s", mkey, err.Error())
 	}
@@ -4343,15 +4343,15 @@ type VIPResults struct {
 func (c *WebClient) ListVIPs() (res []*VIP, err error) {
 	var errmsg Result
 	var results VIPResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip", nil, &results, &errmsg)
 	if err != nil {
 		return []*VIP{}, fmt.Errorf("error listing VIPs: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*VIP{}, fmt.Errorf("error listing VIP: not found")
+			return []*VIP{}, fmt.Errorf("error listing VIPs: not found")
 		} else {
-			return []*VIP{}, fmt.Errorf("error listing VIP: %s", errmsg.Status)
+			return []*VIP{}, fmt.Errorf("error listing VIPs: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -4362,7 +4362,7 @@ func (c *WebClient) ListVIPs() (res []*VIP, err error) {
 func (c *WebClient) GetVIP(mkey string) (res *VIP, err error) {
 	var errmsg Result
 	var results VIPResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &VIP{}, fmt.Errorf("error getting VIP '%s': %s", mkey, err.Error())
 	}
@@ -4385,7 +4385,7 @@ func (c *WebClient) GetVIP(mkey string) (res *VIP, err error) {
 func (c *WebClient) CreateVIP(obj *VIP) (id string, err error) {
 	var errmsg Result
 	var results VIPResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/vip", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vip", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating VIP '%s': %s", obj.Name, err.Error())
 	}
@@ -4403,7 +4403,7 @@ func (c *WebClient) CreateVIP(obj *VIP) (id string, err error) {
 func (c *WebClient) UpdateVIP(obj *VIP) (err error) {
 	var errmsg Result
 	var results VIPResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/vip/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/vip/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating VIP '%s': %s", obj.Name, err.Error())
 	}
@@ -4422,7 +4422,7 @@ func (c *WebClient) UpdateVIP(obj *VIP) (err error) {
 func (c *WebClient) DeleteVIP(mkey string) (err error) {
 	var errmsg Result
 	var results VIPResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/vip/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/vip/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting VIP '%s': %s", mkey, err.Error())
 	}
@@ -4681,15 +4681,15 @@ type FirewallVip46Results struct {
 func (c *WebClient) ListFirewallVip46s() (res []*FirewallVip46, err error) {
 	var errmsg Result
 	var results FirewallVip46Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip46", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip46", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallVip46{}, fmt.Errorf("error listing FirewallVip46s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallVip46{}, fmt.Errorf("error listing FirewallVip46: not found")
+			return []*FirewallVip46{}, fmt.Errorf("error listing FirewallVip46s: not found")
 		} else {
-			return []*FirewallVip46{}, fmt.Errorf("error listing FirewallVip46: %s", errmsg.Status)
+			return []*FirewallVip46{}, fmt.Errorf("error listing FirewallVip46s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -4700,7 +4700,7 @@ func (c *WebClient) ListFirewallVip46s() (res []*FirewallVip46, err error) {
 func (c *WebClient) GetFirewallVip46(mkey string) (res *FirewallVip46, err error) {
 	var errmsg Result
 	var results FirewallVip46Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip46/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip46/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallVip46{}, fmt.Errorf("error getting FirewallVip46 '%s': %s", mkey, err.Error())
 	}
@@ -4723,7 +4723,7 @@ func (c *WebClient) GetFirewallVip46(mkey string) (res *FirewallVip46, err error
 func (c *WebClient) CreateFirewallVip46(obj *FirewallVip46) (id string, err error) {
 	var errmsg Result
 	var results FirewallVip46Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/vip46", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vip46", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallVip46 '%s': %s", obj.Name, err.Error())
 	}
@@ -4741,7 +4741,7 @@ func (c *WebClient) CreateFirewallVip46(obj *FirewallVip46) (id string, err erro
 func (c *WebClient) UpdateFirewallVip46(obj *FirewallVip46) (err error) {
 	var errmsg Result
 	var results FirewallVip46Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/vip46/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/vip46/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallVip46 '%s': %s", obj.Name, err.Error())
 	}
@@ -4760,7 +4760,7 @@ func (c *WebClient) UpdateFirewallVip46(obj *FirewallVip46) (err error) {
 func (c *WebClient) DeleteFirewallVip46(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallVip46Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/vip46/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/vip46/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallVip46 '%s': %s", mkey, err.Error())
 	}
@@ -5158,15 +5158,15 @@ type FirewallVip6Results struct {
 func (c *WebClient) ListFirewallVip6s() (res []*FirewallVip6, err error) {
 	var errmsg Result
 	var results FirewallVip6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallVip6{}, fmt.Errorf("error listing FirewallVip6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallVip6{}, fmt.Errorf("error listing FirewallVip6: not found")
+			return []*FirewallVip6{}, fmt.Errorf("error listing FirewallVip6s: not found")
 		} else {
-			return []*FirewallVip6{}, fmt.Errorf("error listing FirewallVip6: %s", errmsg.Status)
+			return []*FirewallVip6{}, fmt.Errorf("error listing FirewallVip6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -5177,7 +5177,7 @@ func (c *WebClient) ListFirewallVip6s() (res []*FirewallVip6, err error) {
 func (c *WebClient) GetFirewallVip6(mkey string) (res *FirewallVip6, err error) {
 	var errmsg Result
 	var results FirewallVip6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallVip6{}, fmt.Errorf("error getting FirewallVip6 '%s': %s", mkey, err.Error())
 	}
@@ -5200,7 +5200,7 @@ func (c *WebClient) GetFirewallVip6(mkey string) (res *FirewallVip6, err error) 
 func (c *WebClient) CreateFirewallVip6(obj *FirewallVip6) (id string, err error) {
 	var errmsg Result
 	var results FirewallVip6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/vip6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vip6", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallVip6 '%s': %s", obj.Name, err.Error())
 	}
@@ -5218,7 +5218,7 @@ func (c *WebClient) CreateFirewallVip6(obj *FirewallVip6) (id string, err error)
 func (c *WebClient) UpdateFirewallVip6(obj *FirewallVip6) (err error) {
 	var errmsg Result
 	var results FirewallVip6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/vip6/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/vip6/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallVip6 '%s': %s", obj.Name, err.Error())
 	}
@@ -5237,7 +5237,7 @@ func (c *WebClient) UpdateFirewallVip6(obj *FirewallVip6) (err error) {
 func (c *WebClient) DeleteFirewallVip6(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallVip6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/vip6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/vip6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallVip6 '%s': %s", mkey, err.Error())
 	}
@@ -5496,15 +5496,15 @@ type FirewallVip64Results struct {
 func (c *WebClient) ListFirewallVip64s() (res []*FirewallVip64, err error) {
 	var errmsg Result
 	var results FirewallVip64Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip64", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip64", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallVip64{}, fmt.Errorf("error listing FirewallVip64s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallVip64{}, fmt.Errorf("error listing FirewallVip64: not found")
+			return []*FirewallVip64{}, fmt.Errorf("error listing FirewallVip64s: not found")
 		} else {
-			return []*FirewallVip64{}, fmt.Errorf("error listing FirewallVip64: %s", errmsg.Status)
+			return []*FirewallVip64{}, fmt.Errorf("error listing FirewallVip64s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -5515,7 +5515,7 @@ func (c *WebClient) ListFirewallVip64s() (res []*FirewallVip64, err error) {
 func (c *WebClient) GetFirewallVip64(mkey string) (res *FirewallVip64, err error) {
 	var errmsg Result
 	var results FirewallVip64Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vip64/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vip64/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallVip64{}, fmt.Errorf("error getting FirewallVip64 '%s': %s", mkey, err.Error())
 	}
@@ -5538,7 +5538,7 @@ func (c *WebClient) GetFirewallVip64(mkey string) (res *FirewallVip64, err error
 func (c *WebClient) CreateFirewallVip64(obj *FirewallVip64) (id string, err error) {
 	var errmsg Result
 	var results FirewallVip64Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/vip64", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vip64", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallVip64 '%s': %s", obj.Name, err.Error())
 	}
@@ -5556,7 +5556,7 @@ func (c *WebClient) CreateFirewallVip64(obj *FirewallVip64) (id string, err erro
 func (c *WebClient) UpdateFirewallVip64(obj *FirewallVip64) (err error) {
 	var errmsg Result
 	var results FirewallVip64Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/vip64/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/vip64/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallVip64 '%s': %s", obj.Name, err.Error())
 	}
@@ -5575,7 +5575,7 @@ func (c *WebClient) UpdateFirewallVip64(obj *FirewallVip64) (err error) {
 func (c *WebClient) DeleteFirewallVip64(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallVip64Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/vip64/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/vip64/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallVip64 '%s': %s", mkey, err.Error())
 	}
@@ -5673,15 +5673,15 @@ type FirewallVipgrpResults struct {
 func (c *WebClient) ListFirewallVipgrps() (res []*FirewallVipgrp, err error) {
 	var errmsg Result
 	var results FirewallVipgrpResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vipgrp", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vipgrp", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallVipgrp{}, fmt.Errorf("error listing FirewallVipgrps: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallVipgrp{}, fmt.Errorf("error listing FirewallVipgrp: not found")
+			return []*FirewallVipgrp{}, fmt.Errorf("error listing FirewallVipgrps: not found")
 		} else {
-			return []*FirewallVipgrp{}, fmt.Errorf("error listing FirewallVipgrp: %s", errmsg.Status)
+			return []*FirewallVipgrp{}, fmt.Errorf("error listing FirewallVipgrps: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -5692,7 +5692,7 @@ func (c *WebClient) ListFirewallVipgrps() (res []*FirewallVipgrp, err error) {
 func (c *WebClient) GetFirewallVipgrp(mkey string) (res *FirewallVipgrp, err error) {
 	var errmsg Result
 	var results FirewallVipgrpResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vipgrp/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vipgrp/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallVipgrp{}, fmt.Errorf("error getting FirewallVipgrp '%s': %s", mkey, err.Error())
 	}
@@ -5715,7 +5715,7 @@ func (c *WebClient) GetFirewallVipgrp(mkey string) (res *FirewallVipgrp, err err
 func (c *WebClient) CreateFirewallVipgrp(obj *FirewallVipgrp) (id string, err error) {
 	var errmsg Result
 	var results FirewallVipgrpResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/vipgrp", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vipgrp", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallVipgrp '%s': %s", obj.Name, err.Error())
 	}
@@ -5733,7 +5733,7 @@ func (c *WebClient) CreateFirewallVipgrp(obj *FirewallVipgrp) (id string, err er
 func (c *WebClient) UpdateFirewallVipgrp(obj *FirewallVipgrp) (err error) {
 	var errmsg Result
 	var results FirewallVipgrpResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/vipgrp/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/vipgrp/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallVipgrp '%s': %s", obj.Name, err.Error())
 	}
@@ -5752,7 +5752,7 @@ func (c *WebClient) UpdateFirewallVipgrp(obj *FirewallVipgrp) (err error) {
 func (c *WebClient) DeleteFirewallVipgrp(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallVipgrpResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/vipgrp/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/vipgrp/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallVipgrp '%s': %s", mkey, err.Error())
 	}
@@ -5847,15 +5847,15 @@ type FirewallVipgrp46Results struct {
 func (c *WebClient) ListFirewallVipgrp46s() (res []*FirewallVipgrp46, err error) {
 	var errmsg Result
 	var results FirewallVipgrp46Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vipgrp46", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vipgrp46", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallVipgrp46{}, fmt.Errorf("error listing FirewallVipgrp46s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallVipgrp46{}, fmt.Errorf("error listing FirewallVipgrp46: not found")
+			return []*FirewallVipgrp46{}, fmt.Errorf("error listing FirewallVipgrp46s: not found")
 		} else {
-			return []*FirewallVipgrp46{}, fmt.Errorf("error listing FirewallVipgrp46: %s", errmsg.Status)
+			return []*FirewallVipgrp46{}, fmt.Errorf("error listing FirewallVipgrp46s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -5866,7 +5866,7 @@ func (c *WebClient) ListFirewallVipgrp46s() (res []*FirewallVipgrp46, err error)
 func (c *WebClient) GetFirewallVipgrp46(mkey string) (res *FirewallVipgrp46, err error) {
 	var errmsg Result
 	var results FirewallVipgrp46Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vipgrp46/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vipgrp46/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallVipgrp46{}, fmt.Errorf("error getting FirewallVipgrp46 '%s': %s", mkey, err.Error())
 	}
@@ -5889,7 +5889,7 @@ func (c *WebClient) GetFirewallVipgrp46(mkey string) (res *FirewallVipgrp46, err
 func (c *WebClient) CreateFirewallVipgrp46(obj *FirewallVipgrp46) (id string, err error) {
 	var errmsg Result
 	var results FirewallVipgrp46Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/vipgrp46", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vipgrp46", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallVipgrp46 '%s': %s", obj.Name, err.Error())
 	}
@@ -5907,7 +5907,7 @@ func (c *WebClient) CreateFirewallVipgrp46(obj *FirewallVipgrp46) (id string, er
 func (c *WebClient) UpdateFirewallVipgrp46(obj *FirewallVipgrp46) (err error) {
 	var errmsg Result
 	var results FirewallVipgrp46Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/vipgrp46/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/vipgrp46/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallVipgrp46 '%s': %s", obj.Name, err.Error())
 	}
@@ -5926,7 +5926,7 @@ func (c *WebClient) UpdateFirewallVipgrp46(obj *FirewallVipgrp46) (err error) {
 func (c *WebClient) DeleteFirewallVipgrp46(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallVipgrp46Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/vipgrp46/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/vipgrp46/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallVipgrp46 '%s': %s", mkey, err.Error())
 	}
@@ -6021,15 +6021,15 @@ type FirewallVipgrp6Results struct {
 func (c *WebClient) ListFirewallVipgrp6s() (res []*FirewallVipgrp6, err error) {
 	var errmsg Result
 	var results FirewallVipgrp6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vipgrp6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vipgrp6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallVipgrp6{}, fmt.Errorf("error listing FirewallVipgrp6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallVipgrp6{}, fmt.Errorf("error listing FirewallVipgrp6: not found")
+			return []*FirewallVipgrp6{}, fmt.Errorf("error listing FirewallVipgrp6s: not found")
 		} else {
-			return []*FirewallVipgrp6{}, fmt.Errorf("error listing FirewallVipgrp6: %s", errmsg.Status)
+			return []*FirewallVipgrp6{}, fmt.Errorf("error listing FirewallVipgrp6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -6040,7 +6040,7 @@ func (c *WebClient) ListFirewallVipgrp6s() (res []*FirewallVipgrp6, err error) {
 func (c *WebClient) GetFirewallVipgrp6(mkey string) (res *FirewallVipgrp6, err error) {
 	var errmsg Result
 	var results FirewallVipgrp6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vipgrp6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vipgrp6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallVipgrp6{}, fmt.Errorf("error getting FirewallVipgrp6 '%s': %s", mkey, err.Error())
 	}
@@ -6063,7 +6063,7 @@ func (c *WebClient) GetFirewallVipgrp6(mkey string) (res *FirewallVipgrp6, err e
 func (c *WebClient) CreateFirewallVipgrp6(obj *FirewallVipgrp6) (id string, err error) {
 	var errmsg Result
 	var results FirewallVipgrp6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/vipgrp6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vipgrp6", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallVipgrp6 '%s': %s", obj.Name, err.Error())
 	}
@@ -6081,7 +6081,7 @@ func (c *WebClient) CreateFirewallVipgrp6(obj *FirewallVipgrp6) (id string, err 
 func (c *WebClient) UpdateFirewallVipgrp6(obj *FirewallVipgrp6) (err error) {
 	var errmsg Result
 	var results FirewallVipgrp6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/vipgrp6/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/vipgrp6/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallVipgrp6 '%s': %s", obj.Name, err.Error())
 	}
@@ -6100,7 +6100,7 @@ func (c *WebClient) UpdateFirewallVipgrp6(obj *FirewallVipgrp6) (err error) {
 func (c *WebClient) DeleteFirewallVipgrp6(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallVipgrp6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/vipgrp6/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/vipgrp6/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallVipgrp6 '%s': %s", mkey, err.Error())
 	}
@@ -6195,15 +6195,15 @@ type FirewallVipgrp64Results struct {
 func (c *WebClient) ListFirewallVipgrp64s() (res []*FirewallVipgrp64, err error) {
 	var errmsg Result
 	var results FirewallVipgrp64Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vipgrp64", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vipgrp64", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallVipgrp64{}, fmt.Errorf("error listing FirewallVipgrp64s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallVipgrp64{}, fmt.Errorf("error listing FirewallVipgrp64: not found")
+			return []*FirewallVipgrp64{}, fmt.Errorf("error listing FirewallVipgrp64s: not found")
 		} else {
-			return []*FirewallVipgrp64{}, fmt.Errorf("error listing FirewallVipgrp64: %s", errmsg.Status)
+			return []*FirewallVipgrp64{}, fmt.Errorf("error listing FirewallVipgrp64s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -6214,7 +6214,7 @@ func (c *WebClient) ListFirewallVipgrp64s() (res []*FirewallVipgrp64, err error)
 func (c *WebClient) GetFirewallVipgrp64(mkey string) (res *FirewallVipgrp64, err error) {
 	var errmsg Result
 	var results FirewallVipgrp64Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/vipgrp64/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/vipgrp64/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallVipgrp64{}, fmt.Errorf("error getting FirewallVipgrp64 '%s': %s", mkey, err.Error())
 	}
@@ -6237,7 +6237,7 @@ func (c *WebClient) GetFirewallVipgrp64(mkey string) (res *FirewallVipgrp64, err
 func (c *WebClient) CreateFirewallVipgrp64(obj *FirewallVipgrp64) (id string, err error) {
 	var errmsg Result
 	var results FirewallVipgrp64Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/vipgrp64", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/vipgrp64", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallVipgrp64 '%s': %s", obj.Name, err.Error())
 	}
@@ -6255,7 +6255,7 @@ func (c *WebClient) CreateFirewallVipgrp64(obj *FirewallVipgrp64) (id string, er
 func (c *WebClient) UpdateFirewallVipgrp64(obj *FirewallVipgrp64) (err error) {
 	var errmsg Result
 	var results FirewallVipgrp64Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/vipgrp64/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/vipgrp64/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallVipgrp64 '%s': %s", obj.Name, err.Error())
 	}
@@ -6274,7 +6274,7 @@ func (c *WebClient) UpdateFirewallVipgrp64(obj *FirewallVipgrp64) (err error) {
 func (c *WebClient) DeleteFirewallVipgrp64(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallVipgrp64Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/vipgrp64/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/vipgrp64/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallVipgrp64 '%s': %s", mkey, err.Error())
 	}
@@ -6425,15 +6425,15 @@ type FirewallProfileProtocolOptionsResults struct {
 func (c *WebClient) ListFirewallProfileProtocolOptionss() (res []*FirewallProfileProtocolOptions, err error) {
 	var errmsg Result
 	var results FirewallProfileProtocolOptionsResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/profile-protocol-options", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/profile-protocol-options", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallProfileProtocolOptions{}, fmt.Errorf("error listing FirewallProfileProtocolOptionss: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallProfileProtocolOptions{}, fmt.Errorf("error listing FirewallProfileProtocolOptions: not found")
+			return []*FirewallProfileProtocolOptions{}, fmt.Errorf("error listing FirewallProfileProtocolOptionss: not found")
 		} else {
-			return []*FirewallProfileProtocolOptions{}, fmt.Errorf("error listing FirewallProfileProtocolOptions: %s", errmsg.Status)
+			return []*FirewallProfileProtocolOptions{}, fmt.Errorf("error listing FirewallProfileProtocolOptionss: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -6444,7 +6444,7 @@ func (c *WebClient) ListFirewallProfileProtocolOptionss() (res []*FirewallProfil
 func (c *WebClient) GetFirewallProfileProtocolOptions(mkey string) (res *FirewallProfileProtocolOptions, err error) {
 	var errmsg Result
 	var results FirewallProfileProtocolOptionsResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/profile-protocol-options/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/profile-protocol-options/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallProfileProtocolOptions{}, fmt.Errorf("error getting FirewallProfileProtocolOptions '%s': %s", mkey, err.Error())
 	}
@@ -6467,7 +6467,7 @@ func (c *WebClient) GetFirewallProfileProtocolOptions(mkey string) (res *Firewal
 func (c *WebClient) CreateFirewallProfileProtocolOptions(obj *FirewallProfileProtocolOptions) (id string, err error) {
 	var errmsg Result
 	var results FirewallProfileProtocolOptionsResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/profile-protocol-options", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/profile-protocol-options", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallProfileProtocolOptions '%s': %s", obj.Name, err.Error())
 	}
@@ -6485,7 +6485,7 @@ func (c *WebClient) CreateFirewallProfileProtocolOptions(obj *FirewallProfilePro
 func (c *WebClient) UpdateFirewallProfileProtocolOptions(obj *FirewallProfileProtocolOptions) (err error) {
 	var errmsg Result
 	var results FirewallProfileProtocolOptionsResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/profile-protocol-options/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/profile-protocol-options/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallProfileProtocolOptions '%s': %s", obj.Name, err.Error())
 	}
@@ -6504,7 +6504,7 @@ func (c *WebClient) UpdateFirewallProfileProtocolOptions(obj *FirewallProfilePro
 func (c *WebClient) DeleteFirewallProfileProtocolOptions(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallProfileProtocolOptionsResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/profile-protocol-options/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/profile-protocol-options/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallProfileProtocolOptions '%s': %s", mkey, err.Error())
 	}
@@ -6761,15 +6761,15 @@ type FirewallSslSshProfileResults struct {
 func (c *WebClient) ListFirewallSslSshProfiles() (res []*FirewallSslSshProfile, err error) {
 	var errmsg Result
 	var results FirewallSslSshProfileResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ssl-ssh-profile", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ssl-ssh-profile", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallSslSshProfile{}, fmt.Errorf("error listing FirewallSslSshProfiles: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallSslSshProfile{}, fmt.Errorf("error listing FirewallSslSshProfile: not found")
+			return []*FirewallSslSshProfile{}, fmt.Errorf("error listing FirewallSslSshProfiles: not found")
 		} else {
-			return []*FirewallSslSshProfile{}, fmt.Errorf("error listing FirewallSslSshProfile: %s", errmsg.Status)
+			return []*FirewallSslSshProfile{}, fmt.Errorf("error listing FirewallSslSshProfiles: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -6780,7 +6780,7 @@ func (c *WebClient) ListFirewallSslSshProfiles() (res []*FirewallSslSshProfile, 
 func (c *WebClient) GetFirewallSslSshProfile(mkey string) (res *FirewallSslSshProfile, err error) {
 	var errmsg Result
 	var results FirewallSslSshProfileResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ssl-ssh-profile/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ssl-ssh-profile/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallSslSshProfile{}, fmt.Errorf("error getting FirewallSslSshProfile '%s': %s", mkey, err.Error())
 	}
@@ -6803,7 +6803,7 @@ func (c *WebClient) GetFirewallSslSshProfile(mkey string) (res *FirewallSslSshPr
 func (c *WebClient) CreateFirewallSslSshProfile(obj *FirewallSslSshProfile) (id string, err error) {
 	var errmsg Result
 	var results FirewallSslSshProfileResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/ssl-ssh-profile", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/ssl-ssh-profile", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallSslSshProfile '%s': %s", obj.Name, err.Error())
 	}
@@ -6821,7 +6821,7 @@ func (c *WebClient) CreateFirewallSslSshProfile(obj *FirewallSslSshProfile) (id 
 func (c *WebClient) UpdateFirewallSslSshProfile(obj *FirewallSslSshProfile) (err error) {
 	var errmsg Result
 	var results FirewallSslSshProfileResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/ssl-ssh-profile/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/ssl-ssh-profile/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallSslSshProfile '%s': %s", obj.Name, err.Error())
 	}
@@ -6840,7 +6840,7 @@ func (c *WebClient) UpdateFirewallSslSshProfile(obj *FirewallSslSshProfile) (err
 func (c *WebClient) DeleteFirewallSslSshProfile(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallSslSshProfileResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/ssl-ssh-profile/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/ssl-ssh-profile/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallSslSshProfile '%s': %s", mkey, err.Error())
 	}
@@ -6952,15 +6952,15 @@ type FirewallProfileGroupResults struct {
 func (c *WebClient) ListFirewallProfileGroups() (res []*FirewallProfileGroup, err error) {
 	var errmsg Result
 	var results FirewallProfileGroupResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/profile-group", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/profile-group", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallProfileGroup{}, fmt.Errorf("error listing FirewallProfileGroups: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallProfileGroup{}, fmt.Errorf("error listing FirewallProfileGroup: not found")
+			return []*FirewallProfileGroup{}, fmt.Errorf("error listing FirewallProfileGroups: not found")
 		} else {
-			return []*FirewallProfileGroup{}, fmt.Errorf("error listing FirewallProfileGroup: %s", errmsg.Status)
+			return []*FirewallProfileGroup{}, fmt.Errorf("error listing FirewallProfileGroups: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -6971,7 +6971,7 @@ func (c *WebClient) ListFirewallProfileGroups() (res []*FirewallProfileGroup, er
 func (c *WebClient) GetFirewallProfileGroup(mkey string) (res *FirewallProfileGroup, err error) {
 	var errmsg Result
 	var results FirewallProfileGroupResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/profile-group/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/profile-group/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallProfileGroup{}, fmt.Errorf("error getting FirewallProfileGroup '%s': %s", mkey, err.Error())
 	}
@@ -6994,7 +6994,7 @@ func (c *WebClient) GetFirewallProfileGroup(mkey string) (res *FirewallProfileGr
 func (c *WebClient) CreateFirewallProfileGroup(obj *FirewallProfileGroup) (id string, err error) {
 	var errmsg Result
 	var results FirewallProfileGroupResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/profile-group", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/profile-group", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallProfileGroup '%s': %s", obj.Name, err.Error())
 	}
@@ -7012,7 +7012,7 @@ func (c *WebClient) CreateFirewallProfileGroup(obj *FirewallProfileGroup) (id st
 func (c *WebClient) UpdateFirewallProfileGroup(obj *FirewallProfileGroup) (err error) {
 	var errmsg Result
 	var results FirewallProfileGroupResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/profile-group/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/profile-group/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallProfileGroup '%s': %s", obj.Name, err.Error())
 	}
@@ -7031,7 +7031,7 @@ func (c *WebClient) UpdateFirewallProfileGroup(obj *FirewallProfileGroup) (err e
 func (c *WebClient) DeleteFirewallProfileGroup(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallProfileGroupResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/profile-group/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/profile-group/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallProfileGroup '%s': %s", mkey, err.Error())
 	}
@@ -7269,15 +7269,15 @@ type FirewallSslServerResults struct {
 func (c *WebClient) ListFirewallSslServers() (res []*FirewallSslServer, err error) {
 	var errmsg Result
 	var results FirewallSslServerResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ssl-server", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ssl-server", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallSslServer{}, fmt.Errorf("error listing FirewallSslServers: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallSslServer{}, fmt.Errorf("error listing FirewallSslServer: not found")
+			return []*FirewallSslServer{}, fmt.Errorf("error listing FirewallSslServers: not found")
 		} else {
-			return []*FirewallSslServer{}, fmt.Errorf("error listing FirewallSslServer: %s", errmsg.Status)
+			return []*FirewallSslServer{}, fmt.Errorf("error listing FirewallSslServers: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -7288,7 +7288,7 @@ func (c *WebClient) ListFirewallSslServers() (res []*FirewallSslServer, err erro
 func (c *WebClient) GetFirewallSslServer(mkey string) (res *FirewallSslServer, err error) {
 	var errmsg Result
 	var results FirewallSslServerResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ssl-server/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ssl-server/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallSslServer{}, fmt.Errorf("error getting FirewallSslServer '%s': %s", mkey, err.Error())
 	}
@@ -7311,7 +7311,7 @@ func (c *WebClient) GetFirewallSslServer(mkey string) (res *FirewallSslServer, e
 func (c *WebClient) CreateFirewallSslServer(obj *FirewallSslServer) (id string, err error) {
 	var errmsg Result
 	var results FirewallSslServerResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/ssl-server", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/ssl-server", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallSslServer '%s': %s", obj.Name, err.Error())
 	}
@@ -7329,7 +7329,7 @@ func (c *WebClient) CreateFirewallSslServer(obj *FirewallSslServer) (id string, 
 func (c *WebClient) UpdateFirewallSslServer(obj *FirewallSslServer) (err error) {
 	var errmsg Result
 	var results FirewallSslServerResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/ssl-server/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/ssl-server/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallSslServer '%s': %s", obj.Name, err.Error())
 	}
@@ -7348,7 +7348,7 @@ func (c *WebClient) UpdateFirewallSslServer(obj *FirewallSslServer) (err error) 
 func (c *WebClient) DeleteFirewallSslServer(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallSslServerResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/ssl-server/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/ssl-server/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallSslServer '%s': %s", mkey, err.Error())
 	}
@@ -7446,15 +7446,15 @@ type FirewallIdentityBasedRouteResults struct {
 func (c *WebClient) ListFirewallIdentityBasedRoutes() (res []*FirewallIdentityBasedRoute, err error) {
 	var errmsg Result
 	var results FirewallIdentityBasedRouteResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/identity-based-route", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/identity-based-route", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallIdentityBasedRoute{}, fmt.Errorf("error listing FirewallIdentityBasedRoutes: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallIdentityBasedRoute{}, fmt.Errorf("error listing FirewallIdentityBasedRoute: not found")
+			return []*FirewallIdentityBasedRoute{}, fmt.Errorf("error listing FirewallIdentityBasedRoutes: not found")
 		} else {
-			return []*FirewallIdentityBasedRoute{}, fmt.Errorf("error listing FirewallIdentityBasedRoute: %s", errmsg.Status)
+			return []*FirewallIdentityBasedRoute{}, fmt.Errorf("error listing FirewallIdentityBasedRoutes: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -7465,7 +7465,7 @@ func (c *WebClient) ListFirewallIdentityBasedRoutes() (res []*FirewallIdentityBa
 func (c *WebClient) GetFirewallIdentityBasedRoute(mkey string) (res *FirewallIdentityBasedRoute, err error) {
 	var errmsg Result
 	var results FirewallIdentityBasedRouteResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/identity-based-route/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/identity-based-route/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallIdentityBasedRoute{}, fmt.Errorf("error getting FirewallIdentityBasedRoute '%s': %s", mkey, err.Error())
 	}
@@ -7488,7 +7488,7 @@ func (c *WebClient) GetFirewallIdentityBasedRoute(mkey string) (res *FirewallIde
 func (c *WebClient) CreateFirewallIdentityBasedRoute(obj *FirewallIdentityBasedRoute) (id string, err error) {
 	var errmsg Result
 	var results FirewallIdentityBasedRouteResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/identity-based-route", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/identity-based-route", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallIdentityBasedRoute '%s': %s", obj.Name, err.Error())
 	}
@@ -7506,7 +7506,7 @@ func (c *WebClient) CreateFirewallIdentityBasedRoute(obj *FirewallIdentityBasedR
 func (c *WebClient) UpdateFirewallIdentityBasedRoute(obj *FirewallIdentityBasedRoute) (err error) {
 	var errmsg Result
 	var results FirewallIdentityBasedRouteResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/identity-based-route/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/identity-based-route/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallIdentityBasedRoute '%s': %s", obj.Name, err.Error())
 	}
@@ -7525,7 +7525,7 @@ func (c *WebClient) UpdateFirewallIdentityBasedRoute(obj *FirewallIdentityBasedR
 func (c *WebClient) DeleteFirewallIdentityBasedRoute(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallIdentityBasedRouteResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/identity-based-route/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/identity-based-route/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallIdentityBasedRoute '%s': %s", mkey, err.Error())
 	}
@@ -8575,15 +8575,15 @@ type FirewallPolicyResults struct {
 func (c *WebClient) ListFirewallPolicys() (res []*FirewallPolicy, err error) {
 	var errmsg Result
 	var results FirewallPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/policy", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicys: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicy: not found")
+			return []*FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicys: not found")
 		} else {
-			return []*FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicy: %s", errmsg.Status)
+			return []*FirewallPolicy{}, fmt.Errorf("error listing FirewallPolicys: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -8594,7 +8594,7 @@ func (c *WebClient) ListFirewallPolicys() (res []*FirewallPolicy, err error) {
 func (c *WebClient) GetFirewallPolicy(mkey int) (res *FirewallPolicy, err error) {
 	var errmsg Result
 	var results FirewallPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -8617,7 +8617,7 @@ func (c *WebClient) GetFirewallPolicy(mkey int) (res *FirewallPolicy, err error)
 func (c *WebClient) CreateFirewallPolicy(obj *FirewallPolicy) (id int, err error) {
 	var errmsg Result
 	var results FirewallPolicyResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/policy", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/policy", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallPolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -8635,7 +8635,7 @@ func (c *WebClient) CreateFirewallPolicy(obj *FirewallPolicy) (id int, err error
 func (c *WebClient) UpdateFirewallPolicy(obj *FirewallPolicy) (err error) {
 	var errmsg Result
 	var results FirewallPolicyResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallPolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -8654,7 +8654,7 @@ func (c *WebClient) UpdateFirewallPolicy(obj *FirewallPolicy) (err error) {
 func (c *WebClient) DeleteFirewallPolicy(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallPolicyResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallPolicy '%s': %s", mkey, err.Error())
 	}
@@ -8881,15 +8881,15 @@ type FirewallShapingPolicyResults struct {
 func (c *WebClient) ListFirewallShapingPolicys() (res []*FirewallShapingPolicy, err error) {
 	var errmsg Result
 	var results FirewallShapingPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/shaping-policy", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/shaping-policy", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallShapingPolicy{}, fmt.Errorf("error listing FirewallShapingPolicys: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallShapingPolicy{}, fmt.Errorf("error listing FirewallShapingPolicy: not found")
+			return []*FirewallShapingPolicy{}, fmt.Errorf("error listing FirewallShapingPolicys: not found")
 		} else {
-			return []*FirewallShapingPolicy{}, fmt.Errorf("error listing FirewallShapingPolicy: %s", errmsg.Status)
+			return []*FirewallShapingPolicy{}, fmt.Errorf("error listing FirewallShapingPolicys: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -8900,7 +8900,7 @@ func (c *WebClient) ListFirewallShapingPolicys() (res []*FirewallShapingPolicy, 
 func (c *WebClient) GetFirewallShapingPolicy(mkey int) (res *FirewallShapingPolicy, err error) {
 	var errmsg Result
 	var results FirewallShapingPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/shaping-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/shaping-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallShapingPolicy{}, fmt.Errorf("error getting FirewallShapingPolicy '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -8923,7 +8923,7 @@ func (c *WebClient) GetFirewallShapingPolicy(mkey int) (res *FirewallShapingPoli
 func (c *WebClient) CreateFirewallShapingPolicy(obj *FirewallShapingPolicy) (id int, err error) {
 	var errmsg Result
 	var results FirewallShapingPolicyResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/shaping-policy", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/shaping-policy", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallShapingPolicy '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -8941,7 +8941,7 @@ func (c *WebClient) CreateFirewallShapingPolicy(obj *FirewallShapingPolicy) (id 
 func (c *WebClient) UpdateFirewallShapingPolicy(obj *FirewallShapingPolicy) (err error) {
 	var errmsg Result
 	var results FirewallShapingPolicyResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/shaping-policy/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/shaping-policy/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallShapingPolicy '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -8960,7 +8960,7 @@ func (c *WebClient) UpdateFirewallShapingPolicy(obj *FirewallShapingPolicy) (err
 func (c *WebClient) DeleteFirewallShapingPolicy(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallShapingPolicyResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/shaping-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/shaping-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallShapingPolicy '%s': %s", mkey, err.Error())
 	}
@@ -9115,15 +9115,15 @@ type FirewallLocalInPolicyResults struct {
 func (c *WebClient) ListFirewallLocalInPolicys() (res []*FirewallLocalInPolicy, err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/local-in-policy", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/local-in-policy", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallLocalInPolicy{}, fmt.Errorf("error listing FirewallLocalInPolicys: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallLocalInPolicy{}, fmt.Errorf("error listing FirewallLocalInPolicy: not found")
+			return []*FirewallLocalInPolicy{}, fmt.Errorf("error listing FirewallLocalInPolicys: not found")
 		} else {
-			return []*FirewallLocalInPolicy{}, fmt.Errorf("error listing FirewallLocalInPolicy: %s", errmsg.Status)
+			return []*FirewallLocalInPolicy{}, fmt.Errorf("error listing FirewallLocalInPolicys: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -9134,7 +9134,7 @@ func (c *WebClient) ListFirewallLocalInPolicys() (res []*FirewallLocalInPolicy, 
 func (c *WebClient) GetFirewallLocalInPolicy(mkey int) (res *FirewallLocalInPolicy, err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/local-in-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/local-in-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallLocalInPolicy{}, fmt.Errorf("error getting FirewallLocalInPolicy '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -9157,7 +9157,7 @@ func (c *WebClient) GetFirewallLocalInPolicy(mkey int) (res *FirewallLocalInPoli
 func (c *WebClient) CreateFirewallLocalInPolicy(obj *FirewallLocalInPolicy) (id int, err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicyResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/local-in-policy", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/local-in-policy", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallLocalInPolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -9175,7 +9175,7 @@ func (c *WebClient) CreateFirewallLocalInPolicy(obj *FirewallLocalInPolicy) (id 
 func (c *WebClient) UpdateFirewallLocalInPolicy(obj *FirewallLocalInPolicy) (err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicyResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/local-in-policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/local-in-policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallLocalInPolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -9194,7 +9194,7 @@ func (c *WebClient) UpdateFirewallLocalInPolicy(obj *FirewallLocalInPolicy) (err
 func (c *WebClient) DeleteFirewallLocalInPolicy(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicyResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/local-in-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/local-in-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallLocalInPolicy '%s': %s", mkey, err.Error())
 	}
@@ -9898,15 +9898,15 @@ type FirewallPolicy6Results struct {
 func (c *WebClient) ListFirewallPolicy6s() (res []*FirewallPolicy6, err error) {
 	var errmsg Result
 	var results FirewallPolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/policy6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallPolicy6{}, fmt.Errorf("error listing FirewallPolicy6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallPolicy6{}, fmt.Errorf("error listing FirewallPolicy6: not found")
+			return []*FirewallPolicy6{}, fmt.Errorf("error listing FirewallPolicy6s: not found")
 		} else {
-			return []*FirewallPolicy6{}, fmt.Errorf("error listing FirewallPolicy6: %s", errmsg.Status)
+			return []*FirewallPolicy6{}, fmt.Errorf("error listing FirewallPolicy6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -9917,7 +9917,7 @@ func (c *WebClient) ListFirewallPolicy6s() (res []*FirewallPolicy6, err error) {
 func (c *WebClient) GetFirewallPolicy6(mkey int) (res *FirewallPolicy6, err error) {
 	var errmsg Result
 	var results FirewallPolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallPolicy6{}, fmt.Errorf("error getting FirewallPolicy6 '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -9940,7 +9940,7 @@ func (c *WebClient) GetFirewallPolicy6(mkey int) (res *FirewallPolicy6, err erro
 func (c *WebClient) CreateFirewallPolicy6(obj *FirewallPolicy6) (id int, err error) {
 	var errmsg Result
 	var results FirewallPolicy6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/policy6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/policy6", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallPolicy6 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -9958,7 +9958,7 @@ func (c *WebClient) CreateFirewallPolicy6(obj *FirewallPolicy6) (id int, err err
 func (c *WebClient) UpdateFirewallPolicy6(obj *FirewallPolicy6) (err error) {
 	var errmsg Result
 	var results FirewallPolicy6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/policy6/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/policy6/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallPolicy6 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -9977,7 +9977,7 @@ func (c *WebClient) UpdateFirewallPolicy6(obj *FirewallPolicy6) (err error) {
 func (c *WebClient) DeleteFirewallPolicy6(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallPolicy6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallPolicy6 '%s': %s", mkey, err.Error())
 	}
@@ -10118,15 +10118,15 @@ type FirewallLocalInPolicy6Results struct {
 func (c *WebClient) ListFirewallLocalInPolicy6s() (res []*FirewallLocalInPolicy6, err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/local-in-policy6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/local-in-policy6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallLocalInPolicy6{}, fmt.Errorf("error listing FirewallLocalInPolicy6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallLocalInPolicy6{}, fmt.Errorf("error listing FirewallLocalInPolicy6: not found")
+			return []*FirewallLocalInPolicy6{}, fmt.Errorf("error listing FirewallLocalInPolicy6s: not found")
 		} else {
-			return []*FirewallLocalInPolicy6{}, fmt.Errorf("error listing FirewallLocalInPolicy6: %s", errmsg.Status)
+			return []*FirewallLocalInPolicy6{}, fmt.Errorf("error listing FirewallLocalInPolicy6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -10137,7 +10137,7 @@ func (c *WebClient) ListFirewallLocalInPolicy6s() (res []*FirewallLocalInPolicy6
 func (c *WebClient) GetFirewallLocalInPolicy6(mkey int) (res *FirewallLocalInPolicy6, err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/local-in-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/local-in-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallLocalInPolicy6{}, fmt.Errorf("error getting FirewallLocalInPolicy6 '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -10160,7 +10160,7 @@ func (c *WebClient) GetFirewallLocalInPolicy6(mkey int) (res *FirewallLocalInPol
 func (c *WebClient) CreateFirewallLocalInPolicy6(obj *FirewallLocalInPolicy6) (id int, err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicy6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/local-in-policy6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/local-in-policy6", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallLocalInPolicy6 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -10178,7 +10178,7 @@ func (c *WebClient) CreateFirewallLocalInPolicy6(obj *FirewallLocalInPolicy6) (i
 func (c *WebClient) UpdateFirewallLocalInPolicy6(obj *FirewallLocalInPolicy6) (err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicy6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/local-in-policy6/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/local-in-policy6/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallLocalInPolicy6 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -10197,7 +10197,7 @@ func (c *WebClient) UpdateFirewallLocalInPolicy6(obj *FirewallLocalInPolicy6) (e
 func (c *WebClient) DeleteFirewallLocalInPolicy6(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallLocalInPolicy6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/local-in-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/local-in-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallLocalInPolicy6 '%s': %s", mkey, err.Error())
 	}
@@ -10331,15 +10331,15 @@ type FirewallTtlPolicyResults struct {
 func (c *WebClient) ListFirewallTtlPolicys() (res []*FirewallTtlPolicy, err error) {
 	var errmsg Result
 	var results FirewallTtlPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ttl-policy", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ttl-policy", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallTtlPolicy{}, fmt.Errorf("error listing FirewallTtlPolicys: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallTtlPolicy{}, fmt.Errorf("error listing FirewallTtlPolicy: not found")
+			return []*FirewallTtlPolicy{}, fmt.Errorf("error listing FirewallTtlPolicys: not found")
 		} else {
-			return []*FirewallTtlPolicy{}, fmt.Errorf("error listing FirewallTtlPolicy: %s", errmsg.Status)
+			return []*FirewallTtlPolicy{}, fmt.Errorf("error listing FirewallTtlPolicys: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -10350,7 +10350,7 @@ func (c *WebClient) ListFirewallTtlPolicys() (res []*FirewallTtlPolicy, err erro
 func (c *WebClient) GetFirewallTtlPolicy(mkey int) (res *FirewallTtlPolicy, err error) {
 	var errmsg Result
 	var results FirewallTtlPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ttl-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ttl-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallTtlPolicy{}, fmt.Errorf("error getting FirewallTtlPolicy '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -10373,7 +10373,7 @@ func (c *WebClient) GetFirewallTtlPolicy(mkey int) (res *FirewallTtlPolicy, err 
 func (c *WebClient) CreateFirewallTtlPolicy(obj *FirewallTtlPolicy) (id int, err error) {
 	var errmsg Result
 	var results FirewallTtlPolicyResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/ttl-policy", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/ttl-policy", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallTtlPolicy '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -10391,7 +10391,7 @@ func (c *WebClient) CreateFirewallTtlPolicy(obj *FirewallTtlPolicy) (id int, err
 func (c *WebClient) UpdateFirewallTtlPolicy(obj *FirewallTtlPolicy) (err error) {
 	var errmsg Result
 	var results FirewallTtlPolicyResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/ttl-policy/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/ttl-policy/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallTtlPolicy '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -10410,7 +10410,7 @@ func (c *WebClient) UpdateFirewallTtlPolicy(obj *FirewallTtlPolicy) (err error) 
 func (c *WebClient) DeleteFirewallTtlPolicy(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallTtlPolicyResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/ttl-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/ttl-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallTtlPolicy '%s': %s", mkey, err.Error())
 	}
@@ -10651,15 +10651,15 @@ type FirewallPolicy64Results struct {
 func (c *WebClient) ListFirewallPolicy64s() (res []*FirewallPolicy64, err error) {
 	var errmsg Result
 	var results FirewallPolicy64Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/policy64", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy64", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallPolicy64{}, fmt.Errorf("error listing FirewallPolicy64s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallPolicy64{}, fmt.Errorf("error listing FirewallPolicy64: not found")
+			return []*FirewallPolicy64{}, fmt.Errorf("error listing FirewallPolicy64s: not found")
 		} else {
-			return []*FirewallPolicy64{}, fmt.Errorf("error listing FirewallPolicy64: %s", errmsg.Status)
+			return []*FirewallPolicy64{}, fmt.Errorf("error listing FirewallPolicy64s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -10670,7 +10670,7 @@ func (c *WebClient) ListFirewallPolicy64s() (res []*FirewallPolicy64, err error)
 func (c *WebClient) GetFirewallPolicy64(mkey int) (res *FirewallPolicy64, err error) {
 	var errmsg Result
 	var results FirewallPolicy64Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/policy64/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy64/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallPolicy64{}, fmt.Errorf("error getting FirewallPolicy64 '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -10693,7 +10693,7 @@ func (c *WebClient) GetFirewallPolicy64(mkey int) (res *FirewallPolicy64, err er
 func (c *WebClient) CreateFirewallPolicy64(obj *FirewallPolicy64) (id int, err error) {
 	var errmsg Result
 	var results FirewallPolicy64Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/policy64", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/policy64", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallPolicy64 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -10711,7 +10711,7 @@ func (c *WebClient) CreateFirewallPolicy64(obj *FirewallPolicy64) (id int, err e
 func (c *WebClient) UpdateFirewallPolicy64(obj *FirewallPolicy64) (err error) {
 	var errmsg Result
 	var results FirewallPolicy64Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/policy64/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/policy64/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallPolicy64 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -10730,7 +10730,7 @@ func (c *WebClient) UpdateFirewallPolicy64(obj *FirewallPolicy64) (err error) {
 func (c *WebClient) DeleteFirewallPolicy64(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallPolicy64Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/policy64/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/policy64/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallPolicy64 '%s': %s", mkey, err.Error())
 	}
@@ -10947,15 +10947,15 @@ type FirewallPolicy46Results struct {
 func (c *WebClient) ListFirewallPolicy46s() (res []*FirewallPolicy46, err error) {
 	var errmsg Result
 	var results FirewallPolicy46Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/policy46", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy46", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallPolicy46{}, fmt.Errorf("error listing FirewallPolicy46s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallPolicy46{}, fmt.Errorf("error listing FirewallPolicy46: not found")
+			return []*FirewallPolicy46{}, fmt.Errorf("error listing FirewallPolicy46s: not found")
 		} else {
-			return []*FirewallPolicy46{}, fmt.Errorf("error listing FirewallPolicy46: %s", errmsg.Status)
+			return []*FirewallPolicy46{}, fmt.Errorf("error listing FirewallPolicy46s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -10966,7 +10966,7 @@ func (c *WebClient) ListFirewallPolicy46s() (res []*FirewallPolicy46, err error)
 func (c *WebClient) GetFirewallPolicy46(mkey int) (res *FirewallPolicy46, err error) {
 	var errmsg Result
 	var results FirewallPolicy46Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/policy46/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/policy46/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallPolicy46{}, fmt.Errorf("error getting FirewallPolicy46 '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -10989,7 +10989,7 @@ func (c *WebClient) GetFirewallPolicy46(mkey int) (res *FirewallPolicy46, err er
 func (c *WebClient) CreateFirewallPolicy46(obj *FirewallPolicy46) (id int, err error) {
 	var errmsg Result
 	var results FirewallPolicy46Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/policy46", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/policy46", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallPolicy46 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -11007,7 +11007,7 @@ func (c *WebClient) CreateFirewallPolicy46(obj *FirewallPolicy46) (id int, err e
 func (c *WebClient) UpdateFirewallPolicy46(obj *FirewallPolicy46) (err error) {
 	var errmsg Result
 	var results FirewallPolicy46Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/policy46/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/policy46/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallPolicy46 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -11026,7 +11026,7 @@ func (c *WebClient) UpdateFirewallPolicy46(obj *FirewallPolicy46) (err error) {
 func (c *WebClient) DeleteFirewallPolicy46(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallPolicy46Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/policy46/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/policy46/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallPolicy46 '%s': %s", mkey, err.Error())
 	}
@@ -11298,15 +11298,15 @@ type FirewallProxyAddressResults struct {
 func (c *WebClient) ListFirewallProxyAddresss() (res []*FirewallProxyAddress, err error) {
 	var errmsg Result
 	var results FirewallProxyAddressResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/proxy-address", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/proxy-address", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallProxyAddress{}, fmt.Errorf("error listing FirewallProxyAddresss: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallProxyAddress{}, fmt.Errorf("error listing FirewallProxyAddress: not found")
+			return []*FirewallProxyAddress{}, fmt.Errorf("error listing FirewallProxyAddresss: not found")
 		} else {
-			return []*FirewallProxyAddress{}, fmt.Errorf("error listing FirewallProxyAddress: %s", errmsg.Status)
+			return []*FirewallProxyAddress{}, fmt.Errorf("error listing FirewallProxyAddresss: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -11317,7 +11317,7 @@ func (c *WebClient) ListFirewallProxyAddresss() (res []*FirewallProxyAddress, er
 func (c *WebClient) GetFirewallProxyAddress(mkey string) (res *FirewallProxyAddress, err error) {
 	var errmsg Result
 	var results FirewallProxyAddressResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/proxy-address/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/proxy-address/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallProxyAddress{}, fmt.Errorf("error getting FirewallProxyAddress '%s': %s", mkey, err.Error())
 	}
@@ -11340,7 +11340,7 @@ func (c *WebClient) GetFirewallProxyAddress(mkey string) (res *FirewallProxyAddr
 func (c *WebClient) CreateFirewallProxyAddress(obj *FirewallProxyAddress) (id string, err error) {
 	var errmsg Result
 	var results FirewallProxyAddressResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/proxy-address", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/proxy-address", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallProxyAddress '%s': %s", obj.Name, err.Error())
 	}
@@ -11358,7 +11358,7 @@ func (c *WebClient) CreateFirewallProxyAddress(obj *FirewallProxyAddress) (id st
 func (c *WebClient) UpdateFirewallProxyAddress(obj *FirewallProxyAddress) (err error) {
 	var errmsg Result
 	var results FirewallProxyAddressResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/proxy-address/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/proxy-address/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallProxyAddress '%s': %s", obj.Name, err.Error())
 	}
@@ -11377,7 +11377,7 @@ func (c *WebClient) UpdateFirewallProxyAddress(obj *FirewallProxyAddress) (err e
 func (c *WebClient) DeleteFirewallProxyAddress(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallProxyAddressResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/proxy-address/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/proxy-address/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallProxyAddress '%s': %s", mkey, err.Error())
 	}
@@ -11510,15 +11510,15 @@ type FirewallProxyAddrgrpResults struct {
 func (c *WebClient) ListFirewallProxyAddrgrps() (res []*FirewallProxyAddrgrp, err error) {
 	var errmsg Result
 	var results FirewallProxyAddrgrpResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/proxy-addrgrp", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/proxy-addrgrp", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallProxyAddrgrp{}, fmt.Errorf("error listing FirewallProxyAddrgrps: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallProxyAddrgrp{}, fmt.Errorf("error listing FirewallProxyAddrgrp: not found")
+			return []*FirewallProxyAddrgrp{}, fmt.Errorf("error listing FirewallProxyAddrgrps: not found")
 		} else {
-			return []*FirewallProxyAddrgrp{}, fmt.Errorf("error listing FirewallProxyAddrgrp: %s", errmsg.Status)
+			return []*FirewallProxyAddrgrp{}, fmt.Errorf("error listing FirewallProxyAddrgrps: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -11529,7 +11529,7 @@ func (c *WebClient) ListFirewallProxyAddrgrps() (res []*FirewallProxyAddrgrp, er
 func (c *WebClient) GetFirewallProxyAddrgrp(mkey string) (res *FirewallProxyAddrgrp, err error) {
 	var errmsg Result
 	var results FirewallProxyAddrgrpResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/proxy-addrgrp/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/proxy-addrgrp/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallProxyAddrgrp{}, fmt.Errorf("error getting FirewallProxyAddrgrp '%s': %s", mkey, err.Error())
 	}
@@ -11552,7 +11552,7 @@ func (c *WebClient) GetFirewallProxyAddrgrp(mkey string) (res *FirewallProxyAddr
 func (c *WebClient) CreateFirewallProxyAddrgrp(obj *FirewallProxyAddrgrp) (id string, err error) {
 	var errmsg Result
 	var results FirewallProxyAddrgrpResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/proxy-addrgrp", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/proxy-addrgrp", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating FirewallProxyAddrgrp '%s': %s", obj.Name, err.Error())
 	}
@@ -11570,7 +11570,7 @@ func (c *WebClient) CreateFirewallProxyAddrgrp(obj *FirewallProxyAddrgrp) (id st
 func (c *WebClient) UpdateFirewallProxyAddrgrp(obj *FirewallProxyAddrgrp) (err error) {
 	var errmsg Result
 	var results FirewallProxyAddrgrpResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/proxy-addrgrp/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/proxy-addrgrp/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallProxyAddrgrp '%s': %s", obj.Name, err.Error())
 	}
@@ -11589,7 +11589,7 @@ func (c *WebClient) UpdateFirewallProxyAddrgrp(obj *FirewallProxyAddrgrp) (err e
 func (c *WebClient) DeleteFirewallProxyAddrgrp(mkey string) (err error) {
 	var errmsg Result
 	var results FirewallProxyAddrgrpResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/proxy-addrgrp/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/proxy-addrgrp/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallProxyAddrgrp '%s': %s", mkey, err.Error())
 	}
@@ -12097,15 +12097,15 @@ type FirewallProxyPolicyResults struct {
 func (c *WebClient) ListFirewallProxyPolicys() (res []*FirewallProxyPolicy, err error) {
 	var errmsg Result
 	var results FirewallProxyPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/proxy-policy", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/proxy-policy", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallProxyPolicy{}, fmt.Errorf("error listing FirewallProxyPolicys: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallProxyPolicy{}, fmt.Errorf("error listing FirewallProxyPolicy: not found")
+			return []*FirewallProxyPolicy{}, fmt.Errorf("error listing FirewallProxyPolicys: not found")
 		} else {
-			return []*FirewallProxyPolicy{}, fmt.Errorf("error listing FirewallProxyPolicy: %s", errmsg.Status)
+			return []*FirewallProxyPolicy{}, fmt.Errorf("error listing FirewallProxyPolicys: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -12116,7 +12116,7 @@ func (c *WebClient) ListFirewallProxyPolicys() (res []*FirewallProxyPolicy, err 
 func (c *WebClient) GetFirewallProxyPolicy(mkey int) (res *FirewallProxyPolicy, err error) {
 	var errmsg Result
 	var results FirewallProxyPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/proxy-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/proxy-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallProxyPolicy{}, fmt.Errorf("error getting FirewallProxyPolicy '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -12139,7 +12139,7 @@ func (c *WebClient) GetFirewallProxyPolicy(mkey int) (res *FirewallProxyPolicy, 
 func (c *WebClient) CreateFirewallProxyPolicy(obj *FirewallProxyPolicy) (id int, err error) {
 	var errmsg Result
 	var results FirewallProxyPolicyResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/proxy-policy", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/proxy-policy", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallProxyPolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -12157,7 +12157,7 @@ func (c *WebClient) CreateFirewallProxyPolicy(obj *FirewallProxyPolicy) (id int,
 func (c *WebClient) UpdateFirewallProxyPolicy(obj *FirewallProxyPolicy) (err error) {
 	var errmsg Result
 	var results FirewallProxyPolicyResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/proxy-policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/proxy-policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallProxyPolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -12176,7 +12176,7 @@ func (c *WebClient) UpdateFirewallProxyPolicy(obj *FirewallProxyPolicy) (err err
 func (c *WebClient) DeleteFirewallProxyPolicy(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallProxyPolicyResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/proxy-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/proxy-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallProxyPolicy '%s': %s", mkey, err.Error())
 	}
@@ -12262,15 +12262,15 @@ type FirewallDnstranslationResults struct {
 func (c *WebClient) ListFirewallDnstranslations() (res []*FirewallDnstranslation, err error) {
 	var errmsg Result
 	var results FirewallDnstranslationResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/dnstranslation", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/dnstranslation", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallDnstranslation{}, fmt.Errorf("error listing FirewallDnstranslations: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallDnstranslation{}, fmt.Errorf("error listing FirewallDnstranslation: not found")
+			return []*FirewallDnstranslation{}, fmt.Errorf("error listing FirewallDnstranslations: not found")
 		} else {
-			return []*FirewallDnstranslation{}, fmt.Errorf("error listing FirewallDnstranslation: %s", errmsg.Status)
+			return []*FirewallDnstranslation{}, fmt.Errorf("error listing FirewallDnstranslations: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -12281,7 +12281,7 @@ func (c *WebClient) ListFirewallDnstranslations() (res []*FirewallDnstranslation
 func (c *WebClient) GetFirewallDnstranslation(mkey int) (res *FirewallDnstranslation, err error) {
 	var errmsg Result
 	var results FirewallDnstranslationResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/dnstranslation/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/dnstranslation/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallDnstranslation{}, fmt.Errorf("error getting FirewallDnstranslation '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -12304,7 +12304,7 @@ func (c *WebClient) GetFirewallDnstranslation(mkey int) (res *FirewallDnstransla
 func (c *WebClient) CreateFirewallDnstranslation(obj *FirewallDnstranslation) (id int, err error) {
 	var errmsg Result
 	var results FirewallDnstranslationResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/dnstranslation", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/dnstranslation", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallDnstranslation '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -12322,7 +12322,7 @@ func (c *WebClient) CreateFirewallDnstranslation(obj *FirewallDnstranslation) (i
 func (c *WebClient) UpdateFirewallDnstranslation(obj *FirewallDnstranslation) (err error) {
 	var errmsg Result
 	var results FirewallDnstranslationResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/dnstranslation/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/dnstranslation/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallDnstranslation '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -12341,7 +12341,7 @@ func (c *WebClient) UpdateFirewallDnstranslation(obj *FirewallDnstranslation) (e
 func (c *WebClient) DeleteFirewallDnstranslation(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallDnstranslationResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/dnstranslation/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/dnstranslation/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallDnstranslation '%s': %s", mkey, err.Error())
 	}
@@ -12515,15 +12515,15 @@ type FirewallMulticastPolicyResults struct {
 func (c *WebClient) ListFirewallMulticastPolicys() (res []*FirewallMulticastPolicy, err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/multicast-policy", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/multicast-policy", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallMulticastPolicy{}, fmt.Errorf("error listing FirewallMulticastPolicys: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallMulticastPolicy{}, fmt.Errorf("error listing FirewallMulticastPolicy: not found")
+			return []*FirewallMulticastPolicy{}, fmt.Errorf("error listing FirewallMulticastPolicys: not found")
 		} else {
-			return []*FirewallMulticastPolicy{}, fmt.Errorf("error listing FirewallMulticastPolicy: %s", errmsg.Status)
+			return []*FirewallMulticastPolicy{}, fmt.Errorf("error listing FirewallMulticastPolicys: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -12534,7 +12534,7 @@ func (c *WebClient) ListFirewallMulticastPolicys() (res []*FirewallMulticastPoli
 func (c *WebClient) GetFirewallMulticastPolicy(mkey int) (res *FirewallMulticastPolicy, err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/multicast-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/multicast-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallMulticastPolicy{}, fmt.Errorf("error getting FirewallMulticastPolicy '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -12557,7 +12557,7 @@ func (c *WebClient) GetFirewallMulticastPolicy(mkey int) (res *FirewallMulticast
 func (c *WebClient) CreateFirewallMulticastPolicy(obj *FirewallMulticastPolicy) (id int, err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicyResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/multicast-policy", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/multicast-policy", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallMulticastPolicy '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -12575,7 +12575,7 @@ func (c *WebClient) CreateFirewallMulticastPolicy(obj *FirewallMulticastPolicy) 
 func (c *WebClient) UpdateFirewallMulticastPolicy(obj *FirewallMulticastPolicy) (err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicyResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/multicast-policy/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/multicast-policy/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallMulticastPolicy '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -12594,7 +12594,7 @@ func (c *WebClient) UpdateFirewallMulticastPolicy(obj *FirewallMulticastPolicy) 
 func (c *WebClient) DeleteFirewallMulticastPolicy(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicyResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/multicast-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/multicast-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallMulticastPolicy '%s': %s", mkey, err.Error())
 	}
@@ -12748,15 +12748,15 @@ type FirewallMulticastPolicy6Results struct {
 func (c *WebClient) ListFirewallMulticastPolicy6s() (res []*FirewallMulticastPolicy6, err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/multicast-policy6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/multicast-policy6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallMulticastPolicy6{}, fmt.Errorf("error listing FirewallMulticastPolicy6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallMulticastPolicy6{}, fmt.Errorf("error listing FirewallMulticastPolicy6: not found")
+			return []*FirewallMulticastPolicy6{}, fmt.Errorf("error listing FirewallMulticastPolicy6s: not found")
 		} else {
-			return []*FirewallMulticastPolicy6{}, fmt.Errorf("error listing FirewallMulticastPolicy6: %s", errmsg.Status)
+			return []*FirewallMulticastPolicy6{}, fmt.Errorf("error listing FirewallMulticastPolicy6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -12767,7 +12767,7 @@ func (c *WebClient) ListFirewallMulticastPolicy6s() (res []*FirewallMulticastPol
 func (c *WebClient) GetFirewallMulticastPolicy6(mkey int) (res *FirewallMulticastPolicy6, err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/multicast-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/multicast-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallMulticastPolicy6{}, fmt.Errorf("error getting FirewallMulticastPolicy6 '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -12790,7 +12790,7 @@ func (c *WebClient) GetFirewallMulticastPolicy6(mkey int) (res *FirewallMulticas
 func (c *WebClient) CreateFirewallMulticastPolicy6(obj *FirewallMulticastPolicy6) (id int, err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicy6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/multicast-policy6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/multicast-policy6", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallMulticastPolicy6 '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -12808,7 +12808,7 @@ func (c *WebClient) CreateFirewallMulticastPolicy6(obj *FirewallMulticastPolicy6
 func (c *WebClient) UpdateFirewallMulticastPolicy6(obj *FirewallMulticastPolicy6) (err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicy6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/multicast-policy6/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/multicast-policy6/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallMulticastPolicy6 '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -12827,7 +12827,7 @@ func (c *WebClient) UpdateFirewallMulticastPolicy6(obj *FirewallMulticastPolicy6
 func (c *WebClient) DeleteFirewallMulticastPolicy6(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallMulticastPolicy6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/multicast-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/multicast-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallMulticastPolicy6 '%s': %s", mkey, err.Error())
 	}
@@ -13121,15 +13121,15 @@ type FirewallInterfacePolicyResults struct {
 func (c *WebClient) ListFirewallInterfacePolicys() (res []*FirewallInterfacePolicy, err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/interface-policy", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/interface-policy", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallInterfacePolicy{}, fmt.Errorf("error listing FirewallInterfacePolicys: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallInterfacePolicy{}, fmt.Errorf("error listing FirewallInterfacePolicy: not found")
+			return []*FirewallInterfacePolicy{}, fmt.Errorf("error listing FirewallInterfacePolicys: not found")
 		} else {
-			return []*FirewallInterfacePolicy{}, fmt.Errorf("error listing FirewallInterfacePolicy: %s", errmsg.Status)
+			return []*FirewallInterfacePolicy{}, fmt.Errorf("error listing FirewallInterfacePolicys: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -13140,7 +13140,7 @@ func (c *WebClient) ListFirewallInterfacePolicys() (res []*FirewallInterfacePoli
 func (c *WebClient) GetFirewallInterfacePolicy(mkey int) (res *FirewallInterfacePolicy, err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/interface-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/interface-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallInterfacePolicy{}, fmt.Errorf("error getting FirewallInterfacePolicy '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -13163,7 +13163,7 @@ func (c *WebClient) GetFirewallInterfacePolicy(mkey int) (res *FirewallInterface
 func (c *WebClient) CreateFirewallInterfacePolicy(obj *FirewallInterfacePolicy) (id int, err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicyResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/interface-policy", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/interface-policy", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallInterfacePolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -13181,7 +13181,7 @@ func (c *WebClient) CreateFirewallInterfacePolicy(obj *FirewallInterfacePolicy) 
 func (c *WebClient) UpdateFirewallInterfacePolicy(obj *FirewallInterfacePolicy) (err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicyResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/interface-policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/interface-policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallInterfacePolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -13200,7 +13200,7 @@ func (c *WebClient) UpdateFirewallInterfacePolicy(obj *FirewallInterfacePolicy) 
 func (c *WebClient) DeleteFirewallInterfacePolicy(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicyResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/interface-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/interface-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallInterfacePolicy '%s': %s", mkey, err.Error())
 	}
@@ -13494,15 +13494,15 @@ type FirewallInterfacePolicy6Results struct {
 func (c *WebClient) ListFirewallInterfacePolicy6s() (res []*FirewallInterfacePolicy6, err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/interface-policy6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/interface-policy6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallInterfacePolicy6{}, fmt.Errorf("error listing FirewallInterfacePolicy6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallInterfacePolicy6{}, fmt.Errorf("error listing FirewallInterfacePolicy6: not found")
+			return []*FirewallInterfacePolicy6{}, fmt.Errorf("error listing FirewallInterfacePolicy6s: not found")
 		} else {
-			return []*FirewallInterfacePolicy6{}, fmt.Errorf("error listing FirewallInterfacePolicy6: %s", errmsg.Status)
+			return []*FirewallInterfacePolicy6{}, fmt.Errorf("error listing FirewallInterfacePolicy6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -13513,7 +13513,7 @@ func (c *WebClient) ListFirewallInterfacePolicy6s() (res []*FirewallInterfacePol
 func (c *WebClient) GetFirewallInterfacePolicy6(mkey int) (res *FirewallInterfacePolicy6, err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/interface-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/interface-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallInterfacePolicy6{}, fmt.Errorf("error getting FirewallInterfacePolicy6 '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -13536,7 +13536,7 @@ func (c *WebClient) GetFirewallInterfacePolicy6(mkey int) (res *FirewallInterfac
 func (c *WebClient) CreateFirewallInterfacePolicy6(obj *FirewallInterfacePolicy6) (id int, err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicy6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/interface-policy6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/interface-policy6", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallInterfacePolicy6 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -13554,7 +13554,7 @@ func (c *WebClient) CreateFirewallInterfacePolicy6(obj *FirewallInterfacePolicy6
 func (c *WebClient) UpdateFirewallInterfacePolicy6(obj *FirewallInterfacePolicy6) (err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicy6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/interface-policy6/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/interface-policy6/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallInterfacePolicy6 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -13573,7 +13573,7 @@ func (c *WebClient) UpdateFirewallInterfacePolicy6(obj *FirewallInterfacePolicy6
 func (c *WebClient) DeleteFirewallInterfacePolicy6(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallInterfacePolicy6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/interface-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/interface-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallInterfacePolicy6 '%s': %s", mkey, err.Error())
 	}
@@ -13734,15 +13734,15 @@ type FirewallDoSPolicyResults struct {
 func (c *WebClient) ListFirewallDoSPolicys() (res []*FirewallDoSPolicy, err error) {
 	var errmsg Result
 	var results FirewallDoSPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/DoS-policy", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/DoS-policy", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallDoSPolicy{}, fmt.Errorf("error listing FirewallDoSPolicys: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallDoSPolicy{}, fmt.Errorf("error listing FirewallDoSPolicy: not found")
+			return []*FirewallDoSPolicy{}, fmt.Errorf("error listing FirewallDoSPolicys: not found")
 		} else {
-			return []*FirewallDoSPolicy{}, fmt.Errorf("error listing FirewallDoSPolicy: %s", errmsg.Status)
+			return []*FirewallDoSPolicy{}, fmt.Errorf("error listing FirewallDoSPolicys: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -13753,7 +13753,7 @@ func (c *WebClient) ListFirewallDoSPolicys() (res []*FirewallDoSPolicy, err erro
 func (c *WebClient) GetFirewallDoSPolicy(mkey int) (res *FirewallDoSPolicy, err error) {
 	var errmsg Result
 	var results FirewallDoSPolicyResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/DoS-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/DoS-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallDoSPolicy{}, fmt.Errorf("error getting FirewallDoSPolicy '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -13776,7 +13776,7 @@ func (c *WebClient) GetFirewallDoSPolicy(mkey int) (res *FirewallDoSPolicy, err 
 func (c *WebClient) CreateFirewallDoSPolicy(obj *FirewallDoSPolicy) (id int, err error) {
 	var errmsg Result
 	var results FirewallDoSPolicyResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/DoS-policy", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/DoS-policy", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallDoSPolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -13794,7 +13794,7 @@ func (c *WebClient) CreateFirewallDoSPolicy(obj *FirewallDoSPolicy) (id int, err
 func (c *WebClient) UpdateFirewallDoSPolicy(obj *FirewallDoSPolicy) (err error) {
 	var errmsg Result
 	var results FirewallDoSPolicyResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/DoS-policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/DoS-policy/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallDoSPolicy '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -13813,7 +13813,7 @@ func (c *WebClient) UpdateFirewallDoSPolicy(obj *FirewallDoSPolicy) (err error) 
 func (c *WebClient) DeleteFirewallDoSPolicy(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallDoSPolicyResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/DoS-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/DoS-policy/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallDoSPolicy '%s': %s", mkey, err.Error())
 	}
@@ -13974,15 +13974,15 @@ type FirewallDoSPolicy6Results struct {
 func (c *WebClient) ListFirewallDoSPolicy6s() (res []*FirewallDoSPolicy6, err error) {
 	var errmsg Result
 	var results FirewallDoSPolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/DoS-policy6", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/DoS-policy6", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallDoSPolicy6{}, fmt.Errorf("error listing FirewallDoSPolicy6s: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallDoSPolicy6{}, fmt.Errorf("error listing FirewallDoSPolicy6: not found")
+			return []*FirewallDoSPolicy6{}, fmt.Errorf("error listing FirewallDoSPolicy6s: not found")
 		} else {
-			return []*FirewallDoSPolicy6{}, fmt.Errorf("error listing FirewallDoSPolicy6: %s", errmsg.Status)
+			return []*FirewallDoSPolicy6{}, fmt.Errorf("error listing FirewallDoSPolicy6s: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -13993,7 +13993,7 @@ func (c *WebClient) ListFirewallDoSPolicy6s() (res []*FirewallDoSPolicy6, err er
 func (c *WebClient) GetFirewallDoSPolicy6(mkey int) (res *FirewallDoSPolicy6, err error) {
 	var errmsg Result
 	var results FirewallDoSPolicy6Results
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/DoS-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/DoS-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallDoSPolicy6{}, fmt.Errorf("error getting FirewallDoSPolicy6 '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -14016,7 +14016,7 @@ func (c *WebClient) GetFirewallDoSPolicy6(mkey int) (res *FirewallDoSPolicy6, er
 func (c *WebClient) CreateFirewallDoSPolicy6(obj *FirewallDoSPolicy6) (id int, err error) {
 	var errmsg Result
 	var results FirewallDoSPolicy6Results
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/DoS-policy6", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/DoS-policy6", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallDoSPolicy6 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -14034,7 +14034,7 @@ func (c *WebClient) CreateFirewallDoSPolicy6(obj *FirewallDoSPolicy6) (id int, e
 func (c *WebClient) UpdateFirewallDoSPolicy6(obj *FirewallDoSPolicy6) (err error) {
 	var errmsg Result
 	var results FirewallDoSPolicy6Results
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/DoS-policy6/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/DoS-policy6/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallDoSPolicy6 '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -14053,7 +14053,7 @@ func (c *WebClient) UpdateFirewallDoSPolicy6(obj *FirewallDoSPolicy6) (err error
 func (c *WebClient) DeleteFirewallDoSPolicy6(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallDoSPolicy6Results
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/DoS-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/DoS-policy6/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallDoSPolicy6 '%s': %s", mkey, err.Error())
 	}
@@ -14388,15 +14388,15 @@ type FirewallSnifferResults struct {
 func (c *WebClient) ListFirewallSniffers() (res []*FirewallSniffer, err error) {
 	var errmsg Result
 	var results FirewallSnifferResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/sniffer", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/sniffer", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallSniffer{}, fmt.Errorf("error listing FirewallSniffers: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallSniffer{}, fmt.Errorf("error listing FirewallSniffer: not found")
+			return []*FirewallSniffer{}, fmt.Errorf("error listing FirewallSniffers: not found")
 		} else {
-			return []*FirewallSniffer{}, fmt.Errorf("error listing FirewallSniffer: %s", errmsg.Status)
+			return []*FirewallSniffer{}, fmt.Errorf("error listing FirewallSniffers: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -14407,7 +14407,7 @@ func (c *WebClient) ListFirewallSniffers() (res []*FirewallSniffer, err error) {
 func (c *WebClient) GetFirewallSniffer(mkey int) (res *FirewallSniffer, err error) {
 	var errmsg Result
 	var results FirewallSnifferResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/sniffer/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/sniffer/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallSniffer{}, fmt.Errorf("error getting FirewallSniffer '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -14430,7 +14430,7 @@ func (c *WebClient) GetFirewallSniffer(mkey int) (res *FirewallSniffer, err erro
 func (c *WebClient) CreateFirewallSniffer(obj *FirewallSniffer) (id int, err error) {
 	var errmsg Result
 	var results FirewallSnifferResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/sniffer", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/sniffer", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallSniffer '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -14448,7 +14448,7 @@ func (c *WebClient) CreateFirewallSniffer(obj *FirewallSniffer) (id int, err err
 func (c *WebClient) UpdateFirewallSniffer(obj *FirewallSniffer) (err error) {
 	var errmsg Result
 	var results FirewallSnifferResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/sniffer/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/sniffer/"+strconv.Itoa(obj.Id), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallSniffer '%s': %s", strconv.Itoa(obj.Id), err.Error())
 	}
@@ -14467,7 +14467,7 @@ func (c *WebClient) UpdateFirewallSniffer(obj *FirewallSniffer) (err error) {
 func (c *WebClient) DeleteFirewallSniffer(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallSnifferResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/sniffer/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/sniffer/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallSniffer '%s': %s", mkey, err.Error())
 	}
@@ -14631,15 +14631,15 @@ type FirewallCentralSnatMapResults struct {
 func (c *WebClient) ListFirewallCentralSnatMaps() (res []*FirewallCentralSnatMap, err error) {
 	var errmsg Result
 	var results FirewallCentralSnatMapResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/central-snat-map", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/central-snat-map", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallCentralSnatMap{}, fmt.Errorf("error listing FirewallCentralSnatMaps: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallCentralSnatMap{}, fmt.Errorf("error listing FirewallCentralSnatMap: not found")
+			return []*FirewallCentralSnatMap{}, fmt.Errorf("error listing FirewallCentralSnatMaps: not found")
 		} else {
-			return []*FirewallCentralSnatMap{}, fmt.Errorf("error listing FirewallCentralSnatMap: %s", errmsg.Status)
+			return []*FirewallCentralSnatMap{}, fmt.Errorf("error listing FirewallCentralSnatMaps: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -14650,7 +14650,7 @@ func (c *WebClient) ListFirewallCentralSnatMaps() (res []*FirewallCentralSnatMap
 func (c *WebClient) GetFirewallCentralSnatMap(mkey int) (res *FirewallCentralSnatMap, err error) {
 	var errmsg Result
 	var results FirewallCentralSnatMapResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/central-snat-map/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/central-snat-map/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallCentralSnatMap{}, fmt.Errorf("error getting FirewallCentralSnatMap '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -14673,7 +14673,7 @@ func (c *WebClient) GetFirewallCentralSnatMap(mkey int) (res *FirewallCentralSna
 func (c *WebClient) CreateFirewallCentralSnatMap(obj *FirewallCentralSnatMap) (id int, err error) {
 	var errmsg Result
 	var results FirewallCentralSnatMapResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/central-snat-map", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/central-snat-map", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallCentralSnatMap '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -14691,7 +14691,7 @@ func (c *WebClient) CreateFirewallCentralSnatMap(obj *FirewallCentralSnatMap) (i
 func (c *WebClient) UpdateFirewallCentralSnatMap(obj *FirewallCentralSnatMap) (err error) {
 	var errmsg Result
 	var results FirewallCentralSnatMapResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/central-snat-map/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/central-snat-map/"+strconv.Itoa(obj.Policyid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallCentralSnatMap '%s': %s", strconv.Itoa(obj.Policyid), err.Error())
 	}
@@ -14710,7 +14710,7 @@ func (c *WebClient) UpdateFirewallCentralSnatMap(obj *FirewallCentralSnatMap) (e
 func (c *WebClient) DeleteFirewallCentralSnatMap(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallCentralSnatMapResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/central-snat-map/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/central-snat-map/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallCentralSnatMap '%s': %s", mkey, err.Error())
 	}
@@ -14807,15 +14807,15 @@ type FirewallIpTranslationResults struct {
 func (c *WebClient) ListFirewallIpTranslations() (res []*FirewallIpTranslation, err error) {
 	var errmsg Result
 	var results FirewallIpTranslationResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ip-translation", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ip-translation", nil, &results, &errmsg)
 	if err != nil {
 		return []*FirewallIpTranslation{}, fmt.Errorf("error listing FirewallIpTranslations: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*FirewallIpTranslation{}, fmt.Errorf("error listing FirewallIpTranslation: not found")
+			return []*FirewallIpTranslation{}, fmt.Errorf("error listing FirewallIpTranslations: not found")
 		} else {
-			return []*FirewallIpTranslation{}, fmt.Errorf("error listing FirewallIpTranslation: %s", errmsg.Status)
+			return []*FirewallIpTranslation{}, fmt.Errorf("error listing FirewallIpTranslations: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -14826,7 +14826,7 @@ func (c *WebClient) ListFirewallIpTranslations() (res []*FirewallIpTranslation, 
 func (c *WebClient) GetFirewallIpTranslation(mkey int) (res *FirewallIpTranslation, err error) {
 	var errmsg Result
 	var results FirewallIpTranslationResults
-	_, err = c.napping.Get(c.URL+"/api/v2/firewall/ip-translation/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/firewall/ip-translation/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return &FirewallIpTranslation{}, fmt.Errorf("error getting FirewallIpTranslation '%s': %s", strconv.Itoa(mkey), err.Error())
 	}
@@ -14849,7 +14849,7 @@ func (c *WebClient) GetFirewallIpTranslation(mkey int) (res *FirewallIpTranslati
 func (c *WebClient) CreateFirewallIpTranslation(obj *FirewallIpTranslation) (id int, err error) {
 	var errmsg Result
 	var results FirewallIpTranslationResults
-	_, err = c.napping.Post(c.URL+"/api/v2/firewall/ip-translation", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/firewall/ip-translation", obj, &results, &errmsg)
 	if err != nil {
 		return 0, fmt.Errorf("error creating FirewallIpTranslation '%s': %s", strconv.Itoa(obj.Transid), err.Error())
 	}
@@ -14867,7 +14867,7 @@ func (c *WebClient) CreateFirewallIpTranslation(obj *FirewallIpTranslation) (id 
 func (c *WebClient) UpdateFirewallIpTranslation(obj *FirewallIpTranslation) (err error) {
 	var errmsg Result
 	var results FirewallIpTranslationResults
-	_, err = c.napping.Put(c.URL+"/api/v2/firewall/ip-translation/"+strconv.Itoa(obj.Transid), obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/firewall/ip-translation/"+strconv.Itoa(obj.Transid), obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating FirewallIpTranslation '%s': %s", strconv.Itoa(obj.Transid), err.Error())
 	}
@@ -14886,7 +14886,7 @@ func (c *WebClient) UpdateFirewallIpTranslation(obj *FirewallIpTranslation) (err
 func (c *WebClient) DeleteFirewallIpTranslation(mkey int) (err error) {
 	var errmsg Result
 	var results FirewallIpTranslationResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/firewall/ip-translation/"+strconv.Itoa(mkey), nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/firewall/ip-translation/"+strconv.Itoa(mkey), nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting FirewallIpTranslation '%s': %s", mkey, err.Error())
 	}
@@ -15029,15 +15029,15 @@ type CertificateCaResults struct {
 func (c *WebClient) ListCertificateCas() (res []*CertificateCa, err error) {
 	var errmsg Result
 	var results CertificateCaResults
-	_, err = c.napping.Get(c.URL+"/api/v2/certificate/ca", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/certificate/ca", nil, &results, &errmsg)
 	if err != nil {
 		return []*CertificateCa{}, fmt.Errorf("error listing CertificateCas: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*CertificateCa{}, fmt.Errorf("error listing CertificateCa: not found")
+			return []*CertificateCa{}, fmt.Errorf("error listing CertificateCas: not found")
 		} else {
-			return []*CertificateCa{}, fmt.Errorf("error listing CertificateCa: %s", errmsg.Status)
+			return []*CertificateCa{}, fmt.Errorf("error listing CertificateCas: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -15048,7 +15048,7 @@ func (c *WebClient) ListCertificateCas() (res []*CertificateCa, err error) {
 func (c *WebClient) GetCertificateCa(mkey string) (res *CertificateCa, err error) {
 	var errmsg Result
 	var results CertificateCaResults
-	_, err = c.napping.Get(c.URL+"/api/v2/certificate/ca/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/certificate/ca/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &CertificateCa{}, fmt.Errorf("error getting CertificateCa '%s': %s", mkey, err.Error())
 	}
@@ -15071,7 +15071,7 @@ func (c *WebClient) GetCertificateCa(mkey string) (res *CertificateCa, err error
 func (c *WebClient) CreateCertificateCa(obj *CertificateCa) (id string, err error) {
 	var errmsg Result
 	var results CertificateCaResults
-	_, err = c.napping.Post(c.URL+"/api/v2/certificate/ca", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/certificate/ca", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating CertificateCa '%s': %s", obj.Name, err.Error())
 	}
@@ -15089,7 +15089,7 @@ func (c *WebClient) CreateCertificateCa(obj *CertificateCa) (id string, err erro
 func (c *WebClient) UpdateCertificateCa(obj *CertificateCa) (err error) {
 	var errmsg Result
 	var results CertificateCaResults
-	_, err = c.napping.Put(c.URL+"/api/v2/certificate/ca/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/certificate/ca/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating CertificateCa '%s': %s", obj.Name, err.Error())
 	}
@@ -15108,7 +15108,7 @@ func (c *WebClient) UpdateCertificateCa(obj *CertificateCa) (err error) {
 func (c *WebClient) DeleteCertificateCa(mkey string) (err error) {
 	var errmsg Result
 	var results CertificateCaResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/certificate/ca/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/certificate/ca/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting CertificateCa '%s': %s", mkey, err.Error())
 	}
@@ -15288,15 +15288,15 @@ type CertificateLocalResults struct {
 func (c *WebClient) ListCertificateLocals() (res []*CertificateLocal, err error) {
 	var errmsg Result
 	var results CertificateLocalResults
-	_, err = c.napping.Get(c.URL+"/api/v2/certificate/local", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/certificate/local", nil, &results, &errmsg)
 	if err != nil {
 		return []*CertificateLocal{}, fmt.Errorf("error listing CertificateLocals: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*CertificateLocal{}, fmt.Errorf("error listing CertificateLocal: not found")
+			return []*CertificateLocal{}, fmt.Errorf("error listing CertificateLocals: not found")
 		} else {
-			return []*CertificateLocal{}, fmt.Errorf("error listing CertificateLocal: %s", errmsg.Status)
+			return []*CertificateLocal{}, fmt.Errorf("error listing CertificateLocals: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -15307,7 +15307,7 @@ func (c *WebClient) ListCertificateLocals() (res []*CertificateLocal, err error)
 func (c *WebClient) GetCertificateLocal(mkey string) (res *CertificateLocal, err error) {
 	var errmsg Result
 	var results CertificateLocalResults
-	_, err = c.napping.Get(c.URL+"/api/v2/certificate/local/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/certificate/local/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &CertificateLocal{}, fmt.Errorf("error getting CertificateLocal '%s': %s", mkey, err.Error())
 	}
@@ -15330,7 +15330,7 @@ func (c *WebClient) GetCertificateLocal(mkey string) (res *CertificateLocal, err
 func (c *WebClient) CreateCertificateLocal(obj *CertificateLocal) (id string, err error) {
 	var errmsg Result
 	var results CertificateLocalResults
-	_, err = c.napping.Post(c.URL+"/api/v2/certificate/local", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/certificate/local", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating CertificateLocal '%s': %s", obj.Name, err.Error())
 	}
@@ -15348,7 +15348,7 @@ func (c *WebClient) CreateCertificateLocal(obj *CertificateLocal) (id string, er
 func (c *WebClient) UpdateCertificateLocal(obj *CertificateLocal) (err error) {
 	var errmsg Result
 	var results CertificateLocalResults
-	_, err = c.napping.Put(c.URL+"/api/v2/certificate/local/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/certificate/local/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating CertificateLocal '%s': %s", obj.Name, err.Error())
 	}
@@ -15367,7 +15367,7 @@ func (c *WebClient) UpdateCertificateLocal(obj *CertificateLocal) (err error) {
 func (c *WebClient) DeleteCertificateLocal(mkey string) (err error) {
 	var errmsg Result
 	var results CertificateLocalResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/certificate/local/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/certificate/local/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting CertificateLocal '%s': %s", mkey, err.Error())
 	}
@@ -15510,15 +15510,15 @@ type CertificateCrlResults struct {
 func (c *WebClient) ListCertificateCrls() (res []*CertificateCrl, err error) {
 	var errmsg Result
 	var results CertificateCrlResults
-	_, err = c.napping.Get(c.URL+"/api/v2/certificate/crl", nil, &results, nil)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/certificate/crl", nil, &results, &errmsg)
 	if err != nil {
 		return []*CertificateCrl{}, fmt.Errorf("error listing CertificateCrls: %s", err.Error())
 	}
 	if results.HTTPStatus != 200 {
 		if errmsg.HTTPStatus == 404 {
-			return []*CertificateCrl{}, fmt.Errorf("error listing CertificateCrl: not found")
+			return []*CertificateCrl{}, fmt.Errorf("error listing CertificateCrls: not found")
 		} else {
-			return []*CertificateCrl{}, fmt.Errorf("error listing CertificateCrl: %s", errmsg.Status)
+			return []*CertificateCrl{}, fmt.Errorf("error listing CertificateCrls: %s", errmsg.Status)
 		}
 	}
 	res = results.Results
@@ -15529,7 +15529,7 @@ func (c *WebClient) ListCertificateCrls() (res []*CertificateCrl, err error) {
 func (c *WebClient) GetCertificateCrl(mkey string) (res *CertificateCrl, err error) {
 	var errmsg Result
 	var results CertificateCrlResults
-	_, err = c.napping.Get(c.URL+"/api/v2/certificate/crl/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Get(c.URL+"/api/v2/cmdb/certificate/crl/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return &CertificateCrl{}, fmt.Errorf("error getting CertificateCrl '%s': %s", mkey, err.Error())
 	}
@@ -15552,7 +15552,7 @@ func (c *WebClient) GetCertificateCrl(mkey string) (res *CertificateCrl, err err
 func (c *WebClient) CreateCertificateCrl(obj *CertificateCrl) (id string, err error) {
 	var errmsg Result
 	var results CertificateCrlResults
-	_, err = c.napping.Post(c.URL+"/api/v2/certificate/crl", obj, &results, &errmsg)
+	_, err = c.napping.Post(c.URL+"/api/v2/cmdb/certificate/crl", obj, &results, &errmsg)
 	if err != nil {
 		return "", fmt.Errorf("error creating CertificateCrl '%s': %s", obj.Name, err.Error())
 	}
@@ -15570,7 +15570,7 @@ func (c *WebClient) CreateCertificateCrl(obj *CertificateCrl) (id string, err er
 func (c *WebClient) UpdateCertificateCrl(obj *CertificateCrl) (err error) {
 	var errmsg Result
 	var results CertificateCrlResults
-	_, err = c.napping.Put(c.URL+"/api/v2/certificate/crl/"+obj.Name, obj, &results, &errmsg)
+	_, err = c.napping.Put(c.URL+"/api/v2/cmdb/certificate/crl/"+obj.Name, obj, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error updating CertificateCrl '%s': %s", obj.Name, err.Error())
 	}
@@ -15589,7 +15589,7 @@ func (c *WebClient) UpdateCertificateCrl(obj *CertificateCrl) (err error) {
 func (c *WebClient) DeleteCertificateCrl(mkey string) (err error) {
 	var errmsg Result
 	var results CertificateCrlResults
-	_, err = c.napping.Delete(c.URL+"/api/v2/certificate/crl/"+mkey, nil, &results, &errmsg)
+	_, err = c.napping.Delete(c.URL+"/api/v2/cmdb/certificate/crl/"+mkey, nil, &results, &errmsg)
 	if err != nil {
 		return fmt.Errorf("error deleting CertificateCrl '%s': %s", mkey, err.Error())
 	}

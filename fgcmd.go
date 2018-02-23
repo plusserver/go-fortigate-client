@@ -16,20 +16,25 @@ func main() {
 	usage := `fgcmd - fortigate command line utility
 
 Usage:
-  fgcmd vip list
-  fgcmd vip show <name>
-  fgcmd vip delete <name>
-  fgcmd vip create <name> <ip>:<port> <realservers>
-`
+  fgcmd -h | --help
+  fgcmd [ -d | --debug ] vip list
+  fgcmd [ -d | --debug ] vip show <name>
+  fgcmd [ -d | --debug ] vip delete <name>
+  fgcmd [ -d | --debug ] vip create <name> <ip>:<port> <realservers>
 
-	c := fortigate.NewWebClient(fortigate.WebClient{URL: os.Getenv("FORTIGATE_URL"), ApiKey: os.Getenv("FORTIGATE_API_KEY")})
+Options:
+  -h --help     Show this screen.
+  -d --debug    debug
+`
 
 	opts, err := docopt.ParseDoc(usage)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Printf("%+v\n", opts)
+	debug, _ := opts.Bool("--debug")
+
+	c := fortigate.NewWebClient(fortigate.WebClient{URL: os.Getenv("FORTIGATE_URL"), ApiKey: os.Getenv("FORTIGATE_API_KEY"), Log: debug})
 
 	if b, _ := opts.Bool("vip"); b {
 
@@ -95,7 +100,7 @@ Usage:
 				Realservers:     realservers,
 			}
 
-			err = c.CreateVIP(vip)
+			_, err = c.CreateVIP(vip)
 			if err != nil {
 				log.Fatalf("%s", err.Error())
 			}

@@ -176,15 +176,15 @@ type {{ typeName $e }}Results struct {
 func (c *WebClient) List{{ typeName $e }}s() (res []*{{ typeName $e }}, err error) {
   var errmsg Result
   var results {{ typeName $e }}Results
-   _, err = c.napping.Get(c.URL+"/api/v2/{{ $e.Path }}/{{ $e.Name }}", nil, &results, nil)
+   _, err = c.napping.Get(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}", nil, &results, &errmsg)
 	if err != nil {
     return []*{{ typeName $e }}{}, fmt.Errorf("error listing {{ typeName $e }}s: %s", err.Error())
   }
 	if results.HTTPStatus != 200 {
     if errmsg.HTTPStatus == 404 {
-      return []*{{ typeName $e }}{}, fmt.Errorf("error listing {{ typeName $e }}: not found")
+      return []*{{ typeName $e }}{}, fmt.Errorf("error listing {{ typeName $e }}s: not found")
     } else {
-      return []*{{ typeName $e }}{}, fmt.Errorf("error listing {{ typeName $e }}: %s", errmsg.Status)
+      return []*{{ typeName $e }}{}, fmt.Errorf("error listing {{ typeName $e }}s: %s", errmsg.Status)
     }
   }
   res = results.Results
@@ -195,7 +195,7 @@ func (c *WebClient) List{{ typeName $e }}s() (res []*{{ typeName $e }}, err erro
 func (c *WebClient) Get{{ typeName $e }}(mkey {{ goType $e.Schema.MkeyType }}) (res *{{ typeName $e }}, err error) {
   var errmsg Result
   var results {{ typeName $e }}Results
-  _, err = c.napping.Get(c.URL+"/api/v2/{{ $e.Path }}/{{ $e.Name }}/" + {{ bareMkeyAsString $e "mkey" }}, nil, &results, &errmsg)
+  _, err = c.napping.Get(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}/" + {{ bareMkeyAsString $e "mkey" }}, nil, &results, &errmsg)
 	if err != nil {
     return &{{ typeName $e }}{}, fmt.Errorf("error getting {{ typeName $e }} '%s': %s", {{ bareMkeyAsString $e "mkey" }}, err.Error())
   }
@@ -218,7 +218,7 @@ func (c *WebClient) Get{{ typeName $e }}(mkey {{ goType $e.Schema.MkeyType }}) (
 func (c *WebClient) Create{{ typeName $e }}(obj *{{ typeName $e }}) (id {{ goType $e.Schema.MkeyType }}, err error) {
   var errmsg Result
   var results {{ typeName $e }}Results
-  _, err = c.napping.Post(c.URL+"/api/v2/{{ $e.Path }}/{{ $e.Name }}", obj, &results, &errmsg)
+  _, err = c.napping.Post(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}", obj, &results, &errmsg)
 	if err != nil {
     return {{ emptyliteralfor $e.Schema.MkeyType }}, fmt.Errorf("error creating {{ typeName $e }} '%s': %s", {{ mkeyAsString $e "obj" }}, err.Error())
   }
@@ -236,7 +236,7 @@ func (c *WebClient) Create{{ typeName $e }}(obj *{{ typeName $e }}) (id {{ goTyp
 func (c *WebClient) Update{{ typeName $e }}(obj *{{ typeName $e }}) (err error) {
   var errmsg Result
   var results {{ typeName $e }}Results
-  _, err = c.napping.Put(c.URL+"/api/v2/{{ $e.Path }}/{{ $e.Name }}/" + {{ mkeyAsString $e "obj" }}, obj, &results, &errmsg)
+  _, err = c.napping.Put(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}/" + {{ mkeyAsString $e "obj" }}, obj, &results, &errmsg)
 	if err != nil {
     return fmt.Errorf("error updating {{ typeName $e }} '%s': %s", {{ mkeyAsString $e "obj" }}, err.Error())
   }
@@ -255,7 +255,7 @@ func (c *WebClient) Update{{ typeName $e }}(obj *{{ typeName $e }}) (err error) 
 func (c *WebClient) Delete{{ typeName $e }}(mkey {{ goType $e.Schema.MkeyType }}) (err error) {
   var errmsg Result
   var results {{ typeName $e }}Results
-  _, err = c.napping.Delete(c.URL+"/api/v2/{{ $e.Path }}/{{ $e.Name }}/" + {{ bareMkeyAsString $e "mkey" }}, nil, &results, &errmsg)
+  _, err = c.napping.Delete(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}/" + {{ bareMkeyAsString $e "mkey" }}, nil, &results, &errmsg)
 	if err != nil {
     return fmt.Errorf("error deleting {{ typeName $e }} '%s': %s", mkey, err.Error())
   }
