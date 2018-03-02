@@ -1,14 +1,14 @@
 package fortigate
 
 import (
+	"fmt"
 	"crypto/tls"
 	"net/http"
-	"strings"
-
-	"fmt"
-	"gopkg.in/jmcvetta/napping.v3"
 	"net/http/cookiejar"
 	"net/url"
+	"strings"
+
+	"gopkg.in/jmcvetta/napping.v3"
 )
 
 const (
@@ -103,22 +103,6 @@ func (c *WebClient) authenticate() error {
 
 	return nil
 }
-
-//func (c *WebClient) get(url string, p *url.Values, result interface{}, errMsg interface{}) (resp *napping.Response, err error) {
-//	return c.do(http.MethodGet, url, p, nil, result, errMsg)
-//}
-//
-//func (c *WebClient) post(url string, payload interface{}, result interface{}, errMsg interface{}) (resp *napping.Response, err error) {
-//	return c.do(http.MethodPost, url, nil, payload, result, errMsg)
-//}
-//
-//func (c *WebClient) put(url string, payload interface{}, result interface{}, errMsg interface{}) (resp *napping.Response, err error) {
-//	return c.do(http.MethodPut, url, nil, payload, result, errMsg)
-//}
-//
-//func (c *WebClient) delete(url string, p *url.Values, result interface{}, errMsg interface{}) (resp *napping.Response, err error) {
-//	return c.do(http.MethodDelete, url, p, nil, result, errMsg)
-//}
 
 func (c *WebClient) do(method string, path string, p *url.Values, payload interface{}, result2 interface{}) (resp *napping.Response, err error) {
 	var result interface{}
