@@ -34,7 +34,15 @@ Options:
 
 	debug, _ := opts.Bool("--debug")
 
-	c := fortigate.NewWebClient(fortigate.WebClient{URL: os.Getenv("FORTIGATE_URL"), ApiKey: os.Getenv("FORTIGATE_API_KEY"), Log: debug})
+	c, err := fortigate.NewWebClient(fortigate.WebClient{
+		URL:      os.Getenv("FORTIGATE_URL"),
+		User:     os.Getenv("FORTIGATE_USER"),
+		Password: os.Getenv("FORTIGATE_PASSWORD"),
+		ApiKey:   os.Getenv("FORTIGATE_API_KEY"),
+		Log:      debug})
+	if err != nil {
+		panic(err)
+	}
 
 	if b, _ := opts.Bool("vip"); b {
 

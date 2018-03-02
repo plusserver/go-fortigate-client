@@ -29,7 +29,10 @@ func mkName(n string) string {
 
 func main() {
 
-	c := fortigate.NewWebClient(fortigate.WebClient{URL: os.Getenv("FORTIGATE_URL"), ApiKey: os.Getenv("FORTIGATE_API_KEY")})
+	c, err := fortigate.NewWebClient(fortigate.WebClient{URL: os.Getenv("FORTIGATE_URL"), ApiKey: os.Getenv("FORTIGATE_API_KEY")})
+	if err != nil {
+		panic(err)
+	}
 
 	endpoints, err := c.Schema()
 	if err != nil {
@@ -70,6 +73,7 @@ package fortigate
 
 import (
   "fmt"
+  "net/http"
   "strconv"
 )
 
@@ -174,18 +178,10 @@ type {{ typeName $e }}Results struct {
 
 // List all {{ typeName $e }}s
 func (c *WebClient) List{{ typeName $e }}s() (res []*{{ typeName $e }}, err error) {
-  var errmsg Result
   var results {{ typeName $e }}Results
-   _, err = c.napping.Get(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}", nil, &results, &errmsg)
+   _, err = c.do(http.MethodGet, "{{ $e.Path }}/{{ $e.Name }}", nil, nil, &results)
 	if err != nil {
     return []*{{ typeName $e }}{}, fmt.Errorf("error listing {{ typeName $e }}s: %s", err.Error())
-  }
-	if results.HTTPStatus != 200 {
-    if errmsg.HTTPStatus == 404 {
-      return []*{{ typeName $e }}{}, fmt.Errorf("error listing {{ typeName $e }}s: not found")
-    } else {
-      return []*{{ typeName $e }}{}, fmt.Errorf("error listing {{ typeName $e }}s: %s", errmsg.Status)
-    }
   }
   res = results.Results
   return
@@ -193,83 +189,40 @@ func (c *WebClient) List{{ typeName $e }}s() (res []*{{ typeName $e }}, err erro
 
 // Get a {{ typeName $e }} by name
 func (c *WebClient) Get{{ typeName $e }}(mkey {{ goType $e.Schema.MkeyType }}) (res *{{ typeName $e }}, err error) {
-  var errmsg Result
   var results {{ typeName $e }}Results
-  _, err = c.napping.Get(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}/" + {{ bareMkeyAsString $e "mkey" }}, nil, &results, &errmsg)
+  _, err = c.do(http.MethodGet, "{{ $e.Path }}/{{ $e.Name }}/" + {{ bareMkeyAsString $e "mkey" }}, nil, nil, &results) 
 	if err != nil {
     return &{{ typeName $e }}{}, fmt.Errorf("error getting {{ typeName $e }} '%s': %s", {{ bareMkeyAsString $e "mkey" }}, err.Error())
   }
-	if results.HTTPStatus != 200 {
-    if errmsg.HTTPStatus == 404 {
-      return &{{ typeName $e }}{}, fmt.Errorf("error getting {{ typeName $e }} '%s': not found", {{ bareMkeyAsString $e "mkey" }})
-    } else {
-      return &{{ typeName $e }}{}, fmt.Errorf("error getting {{ typeName $e }} '%s': %s", {{ bareMkeyAsString $e "mkey" }}, errmsg.Status)
-    }
-  }
-	if len(results.Results) == 0 {
-    return &{{ typeName $e }}{}, fmt.Errorf("error getting {{ typeName $e }} '%s': not found", {{ bareMkeyAsString $e "mkey" }})
-  }
-
   res = results.Results[0]
   return
 }
 
 // Create a new {{ typeName $e }}
 func (c *WebClient) Create{{ typeName $e }}(obj *{{ typeName $e }}) (id {{ goType $e.Schema.MkeyType }}, err error) {
-  var errmsg Result
-  var results {{ typeName $e }}Results
-  _, err = c.napping.Post(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}", obj, &results, &errmsg)
+  _, err = c.do(http.MethodPost, "{{ $e.Path }}/{{ $e.Name }}", nil, obj, nil)   
 	if err != nil {
     return {{ emptyliteralfor $e.Schema.MkeyType }}, fmt.Errorf("error creating {{ typeName $e }} '%s': %s", {{ mkeyAsString $e "obj" }}, err.Error())
   }
-  if results.HTTPStatus == 200 {
-    return
-  }
-	if errmsg.HTTPStatus != 200 {
-    return {{ emptyliteralfor $e.Schema.MkeyType }}, fmt.Errorf("error creating {{ typeName $e }} '%s': %s", {{ mkeyAsString $e "obj" }}, errmsg.Status)
-  }
-
   return
 }
 
 // Update a {{ typeName $e }}
-func (c *WebClient) Update{{ typeName $e }}(obj *{{ typeName $e }}) (err error) {
-  var errmsg Result
-  var results {{ typeName $e }}Results
-  _, err = c.napping.Put(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}/" + {{ mkeyAsString $e "obj" }}, obj, &results, &errmsg)
+func (c *WebClient) Update{{ typeName $e }}(obj *{{ typeName $e }}) error {
+  _, err := c.do(http.MethodPut, "{{ $e.Path }}/{{ $e.Name }}/" + {{ mkeyAsString $e "obj" }}, nil, obj, nil)
 	if err != nil {
     return fmt.Errorf("error updating {{ typeName $e }} '%s': %s", {{ mkeyAsString $e "obj" }}, err.Error())
   }
-	if results.HTTPStatus != 200 {
-    if errmsg.HTTPStatus == 404 {
-      return fmt.Errorf("error updating {{ typeName $e }} '%s': not found", {{ mkeyAsString $e "obj" }})
-    } else {
-      return fmt.Errorf("error updating {{ typeName $e }} '%s': %s", {{ mkeyAsString $e "obj" }}, errmsg.Status)
-    }
-  }
-
-  return
+  return err
 }
 
 // Delete a {{ typeName $e }} by name
-func (c *WebClient) Delete{{ typeName $e }}(mkey {{ goType $e.Schema.MkeyType }}) (err error) {
-  var errmsg Result
-  var results {{ typeName $e }}Results
-  _, err = c.napping.Delete(c.URL+"/api/v2/cmdb/{{ $e.Path }}/{{ $e.Name }}/" + {{ bareMkeyAsString $e "mkey" }}, nil, &results, &errmsg)
+func (c *WebClient) Delete{{ typeName $e }}(mkey {{ goType $e.Schema.MkeyType }}) error {
+  _, err := c.do(http.MethodDelete, "{{ $e.Path }}/{{ $e.Name }}/" + {{ bareMkeyAsString $e "mkey" }}, nil, nil, nil)
 	if err != nil {
     return fmt.Errorf("error deleting {{ typeName $e }} '%s': %s", mkey, err.Error())
   }
-  if results.HTTPStatus == 200 {
-    return
-  }
-	if errmsg.HTTPStatus != 200 {
-    if errmsg.HTTPStatus == 404 {
-      return fmt.Errorf("error deleting {{ typeName $e }} '%s': not found", mkey)
-    }
-    return fmt.Errorf("error deleting {{ typeName $e }} '%s': %s", mkey, errmsg.Status)
-  }
-
-  return
+  return err
 }
 
 // List all {{ typeName $e }}s
