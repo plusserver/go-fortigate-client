@@ -1,8 +1,9 @@
 package fortigate
 
 import (
-	"fmt"
 	"crypto/tls"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -13,7 +14,11 @@ import (
 
 const (
 	CsrfToken = "ccsrftoken"
+
+	CsrfTokenHeader = "X-Csrftoken"
 )
+
+var apiVersion string
 
 type WebClient struct {
 	URL      string
@@ -26,17 +31,17 @@ type WebClient struct {
 }
 
 type Result struct {
-	HTTPMethod string `json:"http_method"`
-	Revision   string `json:"revision"`
-	Status     string `json:"status"`
-	HTTPStatus int    `json:"http_status"`
-	Vdom       string `json:"vdom"`
-	Path       string `json:"path"`
-	Name       string `json:"name"`
-	Serial     string `json:"serial"`
-	Version    string `json:"version"`
-	Build      int    `json:"build"`
-	Action     string `json:"action"`
+	HTTPMethod string `json:"http_method,omitempty"`
+	Revision   string `json:"revision,omitempty"`
+	Status     string `json:"status,omitempty"`
+	HTTPStatus int    `json:"http_status,omitempty"`
+	Vdom       string `json:"vdom,omitempty"`
+	Path       string `json:"path,omitempty"`
+	Name       string `json:"name,omitempty"`
+	Serial     string `json:"serial,omitempty"`
+	Version    string `json:"version,omitempty"`
+	Build      int    `json:"build,omitempty"`
+	Action     string `json:"action,omitempty"`
 }
 
 func NewWebClient(clientConfig WebClient) (c *WebClient, err error) {
@@ -76,6 +81,19 @@ func NewWebClient(clientConfig WebClient) (c *WebClient, err error) {
 		return nil, fmt.Errorf("either an API key or a user/password is required")
 	}
 
+	var results Result
+	_, err = c.do(http.MethodGet, "firewall/address/all", nil, nil, &results)
+	if err != nil {
+		err = fmt.Errorf("connection established, but failed to get API version: %s", err.Error())
+		return
+	}
+
+	apiVersion = results.Version
+	if apiVersion == "" {
+		err = fmt.Errorf("connection established, but failed to get API version: version is empty")
+		return
+	}
+
 	return
 }
 
@@ -96,7 +114,7 @@ func (c *WebClient) authenticate() error {
 			if cookie.Value == "0%260" {
 				return fmt.Errorf("could not log in as user '%s' at '%s'", c.User, c.URL)
 			} else {
-				c.napping.Header = &http.Header{"X-CSRFTOKEN": []string{cookie.Value}}
+				c.napping.Header = &http.Header{CsrfTokenHeader: []string{cookie.Value}}
 			}
 		}
 	}
@@ -165,4 +183,68 @@ func (c *WebClient) do(method string, path string, p *url.Values, payload interf
 	}
 
 	return
+}
+
+// Special cases
+func (v *VIP) UnmarshalJSON(data []byte) error {
+	switch apiVersion {
+	case "v5.4.6":
+		type VIPAlias VIP
+		temp := struct {
+			Monitor string `json:"monitor"`
+			*VIPAlias
+		}{
+			VIPAlias: (*VIPAlias)(v),
+		}
+		if err := json.Unmarshal(data, &temp); err != nil {
+			return err
+		}
+		v.Monitor = []VIPMonitor{}
+		for _, m := range strings.Split(temp.Monitor, " ") {
+			v.Monitor = append(v.Monitor, VIPMonitor{Name: strings.Replace(m, `"`, "", -1)})
+		}
+		return nil
+
+	default:
+		type VIPAlias VIP
+		temp := struct {
+			*VIPAlias
+		}{
+			VIPAlias: (*VIPAlias)(v),
+		}
+		if err := json.Unmarshal(data, &temp); err != nil {
+			return err
+		}
+		return nil
+	}
+}
+
+func (v *VIP) MarshalJSON() ([]byte, error) {
+	switch apiVersion {
+
+	case "v5.6.3":
+		type VIPAlias VIP
+		return json.Marshal(&struct {
+			*VIPAlias
+		}{
+			VIPAlias: (*VIPAlias)(v),
+		})
+
+	case "v5.4.6":
+		type VIPAlias VIP
+		var ms []string
+		for _, m := range v.Monitor {
+			ms = append(ms, `"`+m.Name+`"`)
+		}
+		return json.Marshal(&struct {
+			*VIPAlias
+			Monitor string `json:"monitor"`
+		}{
+			VIPAlias: (*VIPAlias)(v),
+			Monitor:  strings.Join(ms, " "),
+		})
+
+	default:
+		return []byte{}, fmt.Errorf("unknown or undefined api version")
+	}
 }

@@ -29,7 +29,11 @@ func mkName(n string) string {
 
 func main() {
 
-	c, err := fortigate.NewWebClient(fortigate.WebClient{URL: os.Getenv("FORTIGATE_URL"), ApiKey: os.Getenv("FORTIGATE_API_KEY")})
+	c, err := fortigate.NewWebClient(fortigate.WebClient{
+		URL:      os.Getenv("FORTIGATE_URL"),
+		User:     os.Getenv("FORTIGATE_USER"),
+		Password: os.Getenv("FORTIGATE_PASSWORD"),
+		ApiKey:   os.Getenv("FORTIGATE_API_KEY")})
 	if err != nil {
 		panic(err)
 	}
@@ -59,10 +63,12 @@ func main() {
 			continue
 		}
 
-		endpoints2 = append(endpoints2, e)
 		if e.Path == "firewall" && e.Name == "vip" {
 			// Create an alias "VIP" because compatibility
 			e.Alias = "VIP"
+			endpoints2 = append(endpoints2, e)
+		}
+		if e.Path == "firewall" && e.Name == "policy" {
 			endpoints2 = append(endpoints2, e)
 		}
 	}
@@ -220,7 +226,7 @@ func (c *WebClient) Update{{ typeName $e }}(obj *{{ typeName $e }}) error {
 func (c *WebClient) Delete{{ typeName $e }}(mkey {{ goType $e.Schema.MkeyType }}) error {
   _, err := c.do(http.MethodDelete, "{{ $e.Path }}/{{ $e.Name }}/" + {{ bareMkeyAsString $e "mkey" }}, nil, nil, nil)
 	if err != nil {
-    return fmt.Errorf("error deleting {{ typeName $e }} '%s': %s", mkey, err.Error())
+    return fmt.Errorf("error deleting {{ typeName $e }} '%s': %s", {{ bareMkeyAsString $e "mkey" }}, err.Error())
   }
   return err
 }
