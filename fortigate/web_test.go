@@ -22,7 +22,6 @@ func (s *FortigateTestSuite) TestVIP() {
 
 	if assert.Equal(s.T(), 1, len(vipresults.Results)) {
 		vip := vipresults.Results[0]
-		//spew.Dump(vip)
 		assert.Equal(s.T(), "myvip", vip.Name)
 		assert.Equal(s.T(), "10.70.125.1", vip.Extip)
 		assert.Equal(s.T(), "443", vip.Extport)
