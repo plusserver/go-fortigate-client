@@ -29,8 +29,11 @@ type Client interface {
 	// List all FirewallPolicys
 	ListFirewallPolicys() ([]*FirewallPolicy, error)
 
-	// Get a FirewallPolicy by name
+	// Get a FirewallPolicy by ID
 	GetFirewallPolicy(mkey int) (*FirewallPolicy, error)
+
+	// Get a FirewallPolicy by name
+	GetFirewallPolicyByName(name string) (*FirewallPolicy, error)
 
 	// Create a new FirewallPolicy
 	CreateFirewallPolicy(*FirewallPolicy) (int, error)
@@ -1581,12 +1584,28 @@ func (c *WebClient) ListFirewallPolicys() (res []*FirewallPolicy, err error) {
 	return
 }
 
-// Get a FirewallPolicy by name
+// Get a FirewallPolicy by ID
 func (c *WebClient) GetFirewallPolicy(mkey int) (res *FirewallPolicy, err error) {
 	var results FirewallPolicyResults
 	_, err = c.do(http.MethodGet, "firewall/policy/"+strconv.Itoa(mkey), nil, nil, &results)
 	if err != nil {
-		return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': %s", strconv.Itoa(mkey), err.Error())
+		return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy with id'%s': %s", strconv.Itoa(mkey), err.Error())
+	}
+	res = results.Results[0]
+	return
+}
+
+// Get a FirewallPolicy by ID
+func (c *WebClient) GetFirewallPolicyByName(name string) (res *FirewallPolicy, err error) {
+	var results FirewallPolicyResults
+	_, err = c.do(http.MethodGet, fmt.Sprintf("firewall/policy/?filter=name==%s", name), nil, nil, &results)
+	if err != nil {
+		return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy with name '%s': %s", name, err.Error())
+	}
+	if len(results.Results) == 0 {
+		return &FirewallPolicy{}, fmt.Errorf("not found")
+	} else if len(results.Results) > 1 {
+		return &FirewallPolicy{}, fmt.Errorf("found multiple firewall policies with that name")
 	}
 	res = results.Results[0]
 	return
@@ -1627,13 +1646,33 @@ func (c *FakeClient) ListFirewallPolicys() (res []*FirewallPolicy, err error) {
 	return
 }
 
-// Get a FirewallPolicy by name
+// Get a FirewallPolicy by ID
 func (c *FakeClient) GetFirewallPolicy(mkey int) (*FirewallPolicy, error) {
 	if res, ok := c.FirewallPolicys[mkey]; ok {
 		return res, nil
 	} else {
 		return &FirewallPolicy{}, fmt.Errorf("error getting FirewallPolicy '%s': not found", strconv.Itoa(mkey))
 	}
+}
+
+// Get a FirewallPolicy by name
+func (c *FakeClient) GetFirewallPolicyByName(name string) (res *FirewallPolicy, err error) {
+	found := false
+	for _, p := range c.FirewallPolicys {
+		p := p
+		if p.Name == name {
+			if found {
+				return &FirewallPolicy{}, fmt.Errorf("policy not unique")
+			}
+			found = true
+			res = p
+		}
+	}
+	if !found {
+		return &FirewallPolicy{}, fmt.Errorf("not found")
+	}
+
+	return
 }
 
 // Create a new FirewallPolicy
