@@ -168,18 +168,24 @@ func (c *WebClient) do(method string, path string, p *url.Values, payload interf
 		}
 	}
 
-	if rres, ok := result.(*Result); ok {
-		if rres.HTTPStatus != 200 {
-			if rerrmsg, ok := errMsg.(*Result); ok {
-				if rerrmsg.HTTPStatus == 404 {
-					err = fmt.Errorf("not found")
-				} else if rerrmsg.HTTPStatus == 401 {
-					err = fmt.Errorf("unauthorized")
-				} else {
-					err = fmt.Errorf(rerrmsg.Status)
+	if resp.HttpResponse().StatusCode == 200 {
+		if rres, ok := result.(*Result); ok {
+			if rres.HTTPStatus != 200 {
+				if rerrmsg, ok := errMsg.(*Result); ok {
+					if rerrmsg.HTTPStatus == 404 {
+						err = fmt.Errorf("not found")
+					} else if rerrmsg.HTTPStatus == 401 {
+						err = fmt.Errorf("unauthorized")
+					} else {
+						err = fmt.Errorf(rerrmsg.Status)
+					}
 				}
 			}
 		}
+	} else if resp.HttpResponse().StatusCode == 404 {
+		err = fmt.Errorf("not found")
+	} else {
+		err = fmt.Errorf("http status %s", resp.HttpResponse().Status)
 	}
 
 	return
