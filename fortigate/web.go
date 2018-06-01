@@ -228,7 +228,7 @@ func (v *VIP) UnmarshalJSON(data []byte) error {
 func (v *VIP) MarshalJSON() ([]byte, error) {
 	switch apiVersion {
 
-	case "v5.6.3":
+	case "v5.6.3", "v5.6.4":
 		type VIPAlias VIP
 		return json.Marshal(&struct {
 			*VIPAlias
@@ -251,6 +251,6 @@ func (v *VIP) MarshalJSON() ([]byte, error) {
 		})
 
 	default:
-		return []byte{}, fmt.Errorf("unknown or undefined api version")
+		return []byte{}, fmt.Errorf("unknown or undefined api version %s", apiVersion)
 	}
 }
