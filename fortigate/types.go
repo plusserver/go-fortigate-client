@@ -1678,8 +1678,9 @@ func (c *FakeClient) GetFirewallPolicyByName(name string) (res *FirewallPolicy, 
 // Create a new FirewallPolicy
 func (c *FakeClient) CreateFirewallPolicy(obj *FirewallPolicy) (id int, err error) {
 	id = c.FirewallPolicyCounter
-	c.FirewallPolicyCounter++
+	obj.Policyid = id
 	c.FirewallPolicys[id] = obj
+	c.FirewallPolicyCounter++
 	return
 }
 
